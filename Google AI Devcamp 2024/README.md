@@ -109,6 +109,7 @@ ollama pull gemma:2b
   
 git@github.com:pattyneta/langchainjs-chatbot-docs.git  
 
+[LangChain project](LangChain)  
 
 ## Week 6 Session 1
 
@@ -117,7 +118,7 @@ git@github.com:pattyneta/langchainjs-chatbot-docs.git
 
 Chroma DB  
 
-(ChatBot)[ChatBot]  
+[ChatBot project](ChatBot)  
 
 https://github.com/Uniqcoda/chat-assist-py  
 
@@ -125,7 +126,7 @@ https://github.com/Uniqcoda/chat-assist-py
 
 
 
-## AssessmentS
+## Assessments
 
 https://forms.gle/9ASdn7MqhsTtRxAr9  
 
