@@ -20,4 +20,4 @@ To use it, it must be "activated":
 
 ** Cehck the active virtual environment **
 ``which python``
-it should point to the _.env_ folder.  
+it should point to the _.venv_ folder.  
