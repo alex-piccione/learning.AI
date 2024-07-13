@@ -1,0 +1,15 @@
+
+# Python virtual env
+.venv
+
+# VS Code files
+.vscode
+
+# Google AI Devcamp 2024
+Google\ AI\ Devcamp\ 2024/Videos
+Google\ AI\ Devcamp\ 2024/Data
+
+Google\ AI\ Devcamp\ 2024/fast.ai\ -\ Practical\ Deep\ Learning\ for\ Coders/images
+
+Google\ AI\ Devcamp\ 2024/Hugging\ Face\ Course/.env
+Google AI Devcamp 2024/Coins images/
