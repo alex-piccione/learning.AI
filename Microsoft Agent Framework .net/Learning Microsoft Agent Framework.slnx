@@ -1,6 +1,8 @@
 <Solution>
   <Folder Name="/Solution Items/">
-    <File Path="../.gitignore" />
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
   </Folder>
   <Project Path="ConsoleApp/ConsoleApp.fsproj" />
 </Solution>

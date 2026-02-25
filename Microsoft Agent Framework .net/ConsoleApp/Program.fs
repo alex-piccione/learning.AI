@@ -1,2 +1,2 @@
 ﻿// For more information see https://aka.ms/fsharp-console-apps
-printfn "Agents Framework"
+printfn "Agent Framework"
