@@ -1,17 +1,14 @@
 # Google AI Devcamp 2014
 
-https://huggingface.co/learn/nlp-course/en/chapter0/1?fw=pt
+<https://huggingface.co/learn/nlp-course/en/chapter0/1?fw=pt>
 
-## Links:
+## Links
 
-https://colab.research.google.com
-https://course.fast.ai
-
-Kaggle... http://kaggle.com/alessandropiccione
-
-github.com/fastai/fastbook
-
-Italian LLVM: minerva-38-base-w10 on Hugging Face
+- <https://colab.research.google.com>  
+- <https://course.fast.ai>  
+- Kaggle account: <http://kaggle.com/alessandropiccione>
+- github.com/fastai/fastbook
+- Italian LLVM: minerva-38-base-w10 on Hugging Face
 
 - [Devcamp practice](https://colab.research.google.com/drive/1FViMqfoBrWiKTGKJziWkBaRQnSPQp4kt)
 
@@ -35,13 +32,14 @@ DALL-E : DALL·E 3 | OpenAI
 Cgdream : https://cgdream.ai/my-images  
 Midjourney : https://midjourney.co/generator#what  
 
+## Cousre sessions
 
-## Session 1
+### Session 1
 
 Topic: AI Devcamp - Session 1 - kick off Session  
 Time: May 16, 2024 06:00 PM London  
 
-## Session 2
+### Session 2
 
 Training Techniques:
 - Supervised Learning
@@ -49,20 +47,18 @@ Training Techniques:
   - Logistic Regression 
 - Unsupervised Learning
   - K-Means  (you knwow how many groups you want as input)
-
   
   !pip install transformers  
 
   Kaggle  
 
 
-## Session 3
+### Session 3
 Patty O'Callaghan session about Responsibility of AI.
 
-## Session 4
+### Session 4
 
-
-## Session 5
+### Session 5
 
 Patty O'Callaghan going trough AI Machine Learning  
   
@@ -77,9 +73,9 @@ I believe the ultimate goal is to have the same "tool"  we have with a tradition
 Providing Input + Output to create the "program" is BEFORE we can actually use it (the end user can use it).  
 
 
-## Week 3 Session 2 
+### Week 3 Session 2 
 
-## Week 4 Session 1
+### Week 4 Session 1
 
 Natural Language Processing  
   
@@ -88,7 +84,7 @@ nltk.org
 Stemming  
 
 
-## Week 4 Session 2
+### Week 4 Session 2
 
 dataset: https://www.kaggle.com/datasets/furkannakdagg/amazon-reviews  
 notebook: https://www.kaggle.com/code/furkannakdagg/nlp-sentiment-analysis-tutorial  
@@ -99,9 +95,9 @@ https://www.kaggle.com/datasets/furkannakdagg/amazon-reviews
 https://www.kaggle.com/code/furkannakdagg/nlp-sentiment-analysis-tutorial  
 
 
-## Week 5 session 1
+### Week 5 session 1
 
-## Week 5 session 2
+### Week 5 session 2
 
 ollama.com  
   
