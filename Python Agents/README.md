@@ -1,9 +1,12 @@
 # Python Agents
 
+Microsoft course:  
+Python + Agents: Building AI agents and workflows with Agent Framework  
 
+https://developer.microsoft.com/en-us/reactor/series/S-1631  
 
+Repository:  
 https://github.com/Azure-Samples/python-agentframework-demos
-
 
 
 
@@ -24,19 +27,27 @@ install agen _-core and  _-ui
 
 ## venv
 
-`python -m venv agents` creates a virtialenv named "agents"  
-It created a folder named "agents". I renamed that folder "venv_agents" for clarity.  
+`python -m venv .venv_agents` creates a virtualenv named ".venv_agents"  and the folder _.venv_agents_.  
 
-`./venv_agents/Scripts/activate` will activate it  
+`source ./.venv_agents/Scripts/activate` will activate it in current shell
 
 
-## 
 
-import asyncio
-import os
+UV_PROJECT_ENVIRONMENT=".venv_agents" uv add rich python-dotenv
 
-from agent_framework import Agent
-from agent_framework.openai import OpenAIChatClient
-from azure.identity.aio import DefaultAzureCredential, get_bearer_token_provider
-from dotenv import load_dotenv
-from rich import print
+
+## UV
+
+To make UV able to use the existing .venv_agents folder instead of the expected .venv:  
+`UV_PROJECT_ENVIRONMENT=".venv_agents" uv add rich python-dotenv`  
+or  
+`export UV_PROJECT_ENVIRONMENT=".venv_agents"`  
+
+
+## Issues
+
+### Getting AttributeError: type object 'SpanAttributes' has no attribute 'LLM_SYSTEM'
+
+agent-framework version 1.0.0-rc1  raises an error for missing LLM_ attribute or something like that.  
+The solution was to downgrade "opentelemetry-semantic-conventions-ai":  
+`UV_PROJECT_ENVIRONMENT=".venv_agents" uv add opentelemetry-semantic-conventions-ai==0.4.13`  
