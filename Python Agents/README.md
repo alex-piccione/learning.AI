@@ -19,9 +19,7 @@ https://github.com/Azure-Samples/python-agentframework-demos
 
 uv run   and uv sync ???
 
-
 install agen _-core and  _-ui
-
 
 
 
@@ -33,7 +31,6 @@ install agen _-core and  _-ui
 
 
 
-UV_PROJECT_ENVIRONMENT=".venv_agents" uv add rich python-dotenv
 
 
 ## UV

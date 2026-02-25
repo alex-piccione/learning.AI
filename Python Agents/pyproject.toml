@@ -8,6 +8,7 @@ authors = [
 requires-python = ">=3.12"
 dependencies = [
     "agent-framework",
+    "asyncio>=4.0.0",
     "opentelemetry-semantic-conventions-ai==0.4.13",  # Pinned version for error in agent-framework"
     "python-dotenv>=1.2.1",
     "rich>=14.3.3",
