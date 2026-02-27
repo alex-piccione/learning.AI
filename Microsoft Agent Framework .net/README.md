@@ -1,0 +1,31 @@
+# Microsoft Agents Framework 
+
+https://github.com/microsoft/agent-framework
+
+
+
+
+## OpenAI clients
+
+Think of the **OpenAIClient** as a factory — you call .GetXxxClient() on it to get a specialized client for each API surface:
+| Client | Purpose |
+| --- | --- |
+| Chat.ChatClient | Multi-turn conversations with models (GPT-4o, etc.) — the most common one |
+| Assistants.AssistantClient | Stateful assistants with threads, memory, tool use — OpenAI's older agent abstraction |
+| Responses.ResponsesClient | OpenAI's newer stateless response API (successor to chat completions) |
+| Conversations.ConversationClient | Multi-party conversation management |
+| Audio.AudioClient | Speech-to-text (Whisper) and text-to-speech |
+| Embeddings.EmbeddingClient | Convert text to vector embeddings (for semantic search, RAG) |
+| Images.ImageClient | Generate/edit images (DALL·E)Files.OpenAIFileClient | Upload files to OpenAI (for fine-tuning, assistants, batch) |
+| FineTuning.FineTuningClient | Fine-tune models on your data |
+| Batch.BatchClient | Submit large batches of requests asynchronously (cheaper) |
+| Moderations.ModerationClient | Check if content violates usage policies |
+| Models.OpenAIModelClient | List/inspect available models |
+| VectorStores.VectorStoreClient | Manage vector stores for file search in |
+| AssistantsRealtime.RealtimeClient | Low-latency real-time audio/text streaming (GPT-4o Realtime) |
+| Graders.GraderClient | Evaluate model outputs (evals pipeline) |
+| Evals.EvaluationClient | Run evaluation datasets against models |
+| Containers.ContainerClient | Manage sandboxed code execution containers | 
+| Videos.VideoClientVideo generation (Sora) |
+
+
