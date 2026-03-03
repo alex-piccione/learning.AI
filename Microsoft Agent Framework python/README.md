@@ -13,6 +13,11 @@ https://developer.microsoft.com/en-us/reactor/series/S-1631
   https://developer.microsoft.com/en-us/reactor/events/26690?event_check_in=PSvVYum%206SMLKSjWTqjsJHN8OYg4wZDOGYByqWx76o5/u2hNfRANxd3ofO5CgrkPTxN3QnFA86STI91b%206hnAg==
   https://www.youtube.com/live/3yS-G-NEBu8
 
+- 4. Python + Agents: Building your first AI-driven workflows
+  https://www.youtube.com/live/FQtZCKWjARI
+- 5. 
+- 6.
+
   
 Repository:  
 https://github.com/Azure-Samples/python-agentframework-demos
@@ -21,10 +26,12 @@ Recording  & Resources:
 https://github.com/orgs/microsoft-foundry/discussions/280
 
 
-Boot.dev: Build an aI Agent: https://www.boot.dev/lessons/44e182d7-c2c6-4c7e-9313-1b078e301344
+Boot.dev: Build an AI Agent: https://www.boot.dev/lessons/44e182d7-c2c6-4c7e-9313-1b078e301344
 
 
-## Run the exampl
+
+
+## Run the examples
 
 Code is in _src_ folder.  
 The _examples_ flder contain examples from Google demo repo: https://github.com/Azure-Samples/python-agentframework-demos
@@ -75,6 +82,17 @@ gpt-4.1-mini
 o4-mini
 
 
+## DEV UI
+
+``uv run <fiel> --devui``
+
+
+## Session 1
+
+What is an Agent?  
+**An Agent is an LLm thta runs tools ina loop to achieve a goal.**  
+
+agent_basic.py
 
 
 ## Context
@@ -108,3 +126,29 @@ Mem0 us a "provier" that manage also response to add/delete/upate the memory
 
 
 # 3
+
+
+
+# 4 Worflows
+
+
+workflow_aggregator_structured.py  : workflow without an LLm  at all
+
+```python
+from agent_framework.devui import serve
+serve
+```
+
+workflow_agents.py  : workflow with agents
+
+
+Branching. workflow_conditional_.p
+
+
+Structured Output.  workflow_conditional_structured.py
+
+
+Swith-case conditions.
+
+State management. workflow_conditional_state.py  ctx.set_state/get_state
+
