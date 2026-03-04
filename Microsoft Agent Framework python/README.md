@@ -12,11 +12,11 @@ https://developer.microsoft.com/en-us/reactor/series/S-1631
 - 3. Python + Agents: Monitoring and evaluating agents
   https://developer.microsoft.com/en-us/reactor/events/26690?event_check_in=PSvVYum%206SMLKSjWTqjsJHN8OYg4wZDOGYByqWx76o5/u2hNfRANxd3ofO5CgrkPTxN3QnFA86STI91b%206hnAg==
   https://www.youtube.com/live/3yS-G-NEBu8
-
 - 4. Python + Agents: Building your first AI-driven workflows
   https://www.youtube.com/live/FQtZCKWjARI
-- 5. 
-- 6.
+- 5. Python + Agents: Orchestrating advanced multi-agent workflows 
+  https://www.youtube.com/live/WtZbDrd-RJg
+- 6. 
 
   
 Repository:  
@@ -24,6 +24,8 @@ https://github.com/Azure-Samples/python-agentframework-demos
   
 Recording  & Resources:  
 https://github.com/orgs/microsoft-foundry/discussions/280
+https://github.com/orgs/microsoft-foundry/discussions/331
+
 
 
 Boot.dev: Build an AI Agent: https://www.boot.dev/lessons/44e182d7-c2c6-4c7e-9313-1b078e301344
@@ -95,9 +97,9 @@ What is an Agent?
 agent_basic.py
 
 
-## Context
+### Context
 
-### Memory
+#### Memory
 
 Session (LLM memory)
 - truncation and summarization
@@ -125,7 +127,7 @@ Mem0 us a "provier" that manage also response to add/delete/upate the memory
 
 
 
-# 3
+# Session 3
 
 
 
@@ -152,3 +154,4 @@ Swith-case conditions.
 
 State management. workflow_conditional_state.py  ctx.set_state/get_state
 
+## 5 

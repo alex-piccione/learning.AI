@@ -6,3 +6,6 @@
 **/__pycache__/
 
 **/*.egg-info/
+
+# slides copy whiule reading in PowerPoint
+**/slides/~$*
