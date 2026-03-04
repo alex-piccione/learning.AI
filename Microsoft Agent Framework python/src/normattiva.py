@@ -21,6 +21,14 @@ class NormattivaTool:
         print(f"URL: {url}")
         result = convert_url(url)
         return result.markdown
+    
+    @tool(description="Correct the URN:NRI URL because encoded does not work")
+    def unencode_urn_nri_url(self, url: Annotated[str, "The URL in URN:NRI format to correct"]) -> str:
+        """The returned URL from the serach call is encoded, but the normattiva website accepts only unencode ones."""
+        print("******** tool:  unencode_urn_nri_url ********")
+        if ("N2Ls?urn:nir" in url):
+            url = url.replace("%3A", ":").replace("%3B", ";").replace("%21", "!")
+        return url
 
     @tool(description="Search a text on normattiva.it")
     #@tool(approval_mode="always_require")
@@ -36,11 +44,11 @@ class NormattivaTool:
         return str(result)  # list of SearchResult objects
     
     def get_tools(self) -> list:
-        return [self.get_law_markdown, self.search]   #  <-- how to return these tools ?
+        return [self.get_law_markdown, self.search, self.unencode_urn_nri_url]   #  <-- how to return these tools ?
 
 
 '''
-Result from normayyiva.it search contagins 4 links:
+Result from normattiva.it search contagins 4 links:
  - SearchResult(url='https://www.normattiva.it/eli/stato/LEGGE/2022/12/29/197/CONSOLIDATED', 
              title='LEGGE 29 dicembre 2022, n. 197', score=0.0), 
  - SearchResult(url='https://www.normattiva.it/atto/caricaDettaglioAtto?atto.articolo.numero=86&atto.codiceRedazionale=17G00128&atto.dataPubblicazioneGazzetta=2017-08-02&qId=&tabID=0.8298684148665065&title=lbl.dettaglioAtto', 
@@ -48,11 +56,25 @@ Result from normayyiva.it search contagins 4 links:
  - SearchResult(url='https://www.normattiva.it/uri-res/N2Ls?urn%3Anir%3Astato%3Alegge%3A2014%3B190%7Eart1%21vig=', 
              title='LEGGE 23 dicembre 2014, n. 190', score=0.0), 
  - SearchResult(url='https://www.normattiva.it/uri-res/N2Ls?urn%3Anir%3Astato%3Alegge%3A2014-12-23%3B190%21vig=2023-10-03', 
-             
-This one seems wrong to me:
-https://www.normattiva.it/uri-res/N2Ls?urn%3Anir%3Astato%3Alegge%3A2014%3B190%7Eart1%21vig=
+             title='LEGGE 23 dicembre 2014, n. 190', score=0.0)]
 
-https://www.normattiva.it/uri-res/N2Ls?urn%3Anir%3Astato%3Alegge%3A2014%3B190%7Eart1&vig=
+https://www.normattiva.it/eli/stato/LEGGE/2022/12/29/197/CONSOLIDATED:  OK
+https://www.normattiva.it/atto/caricaDettaglioAtto?atto.articolo.numero=86&atto.codiceRedazionale=17G00128&atto.dataPubblicazioneGazzetta=2017-08-02&qId=&tabID=0.8298684148665065&title=lbl.dettaglioAtto  OK
+https://www.normattiva.it/uri-res/N2Ls?urn%3Anir%3Astato%3Alegge%3A2014%3B190%7Eart1%21vig=   ERROR
+https://www.normattiva.it/uri-res/N2Ls?urn%3Anir%3Astato%3Alegge%3A2014-12-23%3B190%21vig=2023-10-03   ERROR
+
+curl https://www.normattiva.it/uri-res/N2Ls?urn%3Anir%3Astato%3Alegge%3A2014%3B190%7Eart1%21vig=
+
+https://www.normattiva.it/uri-res/N2Ls?urn%3Anir%3Astato%3Alegge%3A2014-12-23%3B199%21vig
+
+: -> %3A
+; -> %3B
+! -> %21
+
+https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:2014-12-23;190!vig
+https://www.normattiva.it/uri-res/N2Ls?urn%3Anir%3Astato%3Alegge%3A2014-12-23%3B190%21vig
+
+https://www.normattiva.it/uri-res/N2Ls?urn%3Anir%3Astato%3Alegge%3A2014-12-23%3B190
+https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:2014-12-23;190
 
 '''
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             title='LEGGE 23 dicembre 2014, n. 190', score=0.0)]
