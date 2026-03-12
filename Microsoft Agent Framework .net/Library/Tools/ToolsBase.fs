@@ -1,4 +1,4 @@
-module tools.toolsBase
+module Tools.ToolsBase
 
 open Microsoft.Extensions.AI
 open System.Reflection

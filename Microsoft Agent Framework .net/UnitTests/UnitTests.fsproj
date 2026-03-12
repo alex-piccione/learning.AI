@@ -1,16 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <IsPackable>false</IsPackable>
-    <GenerateProgramFile>false</GenerateProgramFile>
+    <OutputType>Library</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="data\resource helper.fs" />
+    <EmbeddedResource Include="data\openmeteo forecast.response.json" />
+    <Folder Include="Tools\" />
     <Compile Include="tools\OpenMeteo.test.fs" />
-    <Compile Include="UnitTest1.fs" />
-    <Compile Include="Program.fs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +15,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Foq" />
     <PackageReference Include="FSharp.Core" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="NUnit" />
@@ -26,10 +24,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Unquote" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Tools\" />
+    <ProjectReference Include="..\Library\Library.fsproj" />
   </ItemGroup>
 
 </Project>

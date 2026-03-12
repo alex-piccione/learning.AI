@@ -33,8 +33,12 @@ Think of the **OpenAIClient** as a factory — you call .GetXxxClient() on it to
 
 - Open-Meteo - Free API for weather forecasts, historical data, and climate information. No API key required.
 - weatherapi.com - not tried yet, but seems to have a free tier with 1 million calls/month. Requires API key.
+- KrakenAPIClient - Cleint for Kraken exchange API 
 
+## Tools/Libraries
 
-## Database
-
-Use Npgsql.FSharp for Postgres.
+- Microsoft Agent Framework
+- Npgsql.FSharp
+- NUnit
+- Unquote
+- Foq

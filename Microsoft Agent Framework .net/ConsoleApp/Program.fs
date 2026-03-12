@@ -7,12 +7,17 @@ open Agents.Wheater
 open Spectre.Console
 open Agents.Cryptocurrencies
 open openAIClientBuilder
+open Tools.Kraken
 
 let ct = CancellationToken()
 
 let logger = 
     Microsoft.Extensions.Logging.LoggerFactory.Create(
-        fun builder -> builder.AddConsole() |> ignore
+        fun builder -> 
+            builder
+                .AddConsole() 
+                .SetMinimumLevel(LogLevel.Debug) // Set minimum log level to Debug
+            |> ignore
         ).CreateLogger("ConsoleApp")
 
 let config =
@@ -44,11 +49,12 @@ let response = wheatherAgent.Ask(question, CancellationToken.None) |> Async.RunS
 AnsiConsole.MarkupLine($"[yellow]{response}[/]")
 *)
 
+
 let openAIClientBuilder = openAIClientBuilder.OpenAIClientBuilder(openAiKey)
 
 let chatClient = OpenAIClientBuilder.BuildChatClient(openAiKey, cryptocurrencies_model)
 
-let cryptocurrenciesAgent = CrytocurrenciesAgent(logger, chatClient, config.Get "Kraken:private key", config.Get "Kraken:public key")
+let cryptocurrenciesAgent = CrytocurrenciesAgent(logger, chatClient, config.Get "Kraken:public key", config.Get "Kraken:private key")
 let question = "What is my balance in Kraken?"
 AnsiConsole.MarkupLine($"[cyan]{question}[/]")
 

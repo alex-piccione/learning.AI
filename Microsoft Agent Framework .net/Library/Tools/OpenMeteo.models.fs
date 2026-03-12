@@ -1,4 +1,4 @@
-module Models.OpenMeteo
+module Tools.Models.OpenMeteo
 
 open System.Text.Json
 open System.ComponentModel
@@ -15,7 +15,7 @@ let deserialize<'T> (json: string) : 'T =
     with ex -> failwithf "Failed to deserialize response. Error: %s. JSON: %s" json ex.Message
 
 
-module geolocation =
+module Geolocation =
 
     type Result = {
         name: string
@@ -37,7 +37,7 @@ module geolocation =
     }
 
 
-module forecast = 
+module Forecast = 
 
     //type CurrentData = "" | ""
     //type HourlyData = "temperature_2m" | "rain"
@@ -58,7 +58,7 @@ module forecast =
         "temperature_2m": "°C"
     }
     *)
-    type Data = {
+    type HourlyData = {
         time: System.DateTime array
         [<Description("Air temperature at 2 meters above groun. °C (Celsius).")>]
         temperature_2m: float array
@@ -78,9 +78,29 @@ module forecast =
         cloud_cover:float
     }
 
+    type CurrentData = {
+        time: System.DateTime (* array *)
+        [<Description("Air temperature at 2 meters above groun. °C (Celsius).")>]
+        temperature_2m: float (* array *)
+        [<Description("Relative humidity at 2 meters above ground. °C (Celsius).")>]
+        relative_humidity_2m: float
+        [<Description("Apparent temperature is the perceived feels-like temperature combining wind chill factor, relative humidity and solar radiation")>]
+        apparent_temperature: float
+        [<Description("Total precipitation (rain, showers, snow) sum of the preceding hour. mm (millimeters).")>]
+        precipitation: float
+        [<Description("Rain from large scale weather systems of the preceding hour in millimeter.")>]
+        rain: float
+        [<Description("Probability of precipitation with more than 0.1 mm of the preceding hour. Probability is based on ensemble weather models with 0.25° (~27 km) resolution.")>]
+        precipitation_probability: float
+        [<Description("Wind speed (Km/h) at 10 meters above ground.")>]
+        wind_speed_10m:float
+        [<Description("Total cloud cover as an area fraction.")>]
+        cloud_cover:float
+    }
+
     type Response = {
         [<Description("A list of weather variables to get current conditions.")>]
-        current: Data
+        current: CurrentData
         [<Description("Hourly values")>]
-        hourly: Data
+        hourly: HourlyData
     }
