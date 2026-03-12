@@ -7,7 +7,6 @@ open Agents.Wheater
 open Spectre.Console
 open Agents.Cryptocurrencies
 open openAIClientBuilder
-open Tools.Kraken
 
 let ct = CancellationToken()
 
@@ -26,17 +25,10 @@ let config =
         //.AddAzureKeyVault(Uri("https://your-vault.vault.azure.net/"), DefaultAzureCredential())
         .Build()
 
+let weather_model = Models.OpenAI.GPT_5_mini
+let cryptocurrencies_model = Models.OpenAI.GPT_5_2
+
 let openAiKey = config.Get "OpenAI:API_KEY"
-
-let openai_models = [
-    "gpt-4o",
-    "gpt-4.1-mini",
-    "gpt-5",
-    "gpt-5-mini"
-    ]
-
-let weather_model = "gpt-5"
-let cryptocurrencies_model = "gpt-5-mini";
 
 let wheatherAgent = WeatherAgent.CreateChatClientUsingOpenAI(logger, openAiKey, weather_model)
 
