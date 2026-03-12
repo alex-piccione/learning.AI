@@ -20,7 +20,7 @@ type CrytocurrenciesAgent (logger:ILogger, chatClient:OpenAI.Chat.ChatClient, kr
 
     member _.Ask (question:string, ct:CancellationToken) = task {
         let options:AgentRunOptions = AgentRunOptions()
-        let! response = agent.RunAsync(question, session, options, ct) 
+        let! response = agent.RunAsync(question, session, options, ct)
 
         return response.ToString()
     }

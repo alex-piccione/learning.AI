@@ -18,17 +18,3 @@ type ToolsBase() =
                     Some (AIFunctionFactory.Create(m, this) :> AITool)
         )
         System.Collections.Generic.List<AITool>(tools) // AIClient requires an IList<AITool>
-
-
-let createTools (iTools:ToolsBase) =
-    let tools = 
-        iTools.GetType().GetMethods(BindingFlags.Public ||| BindingFlags.Instance)
-        |> Seq.choose (fun m ->
-            // Only pick methods that have a Description attribute
-            let attr = m.GetCustomAttribute<DescriptionAttribute>()
-            if isNull attr then None
-            else
-                // Create the AIFunction and upcast to AITool
-                Some (AIFunctionFactory.Create(m, iTools) :> AITool)
-        )
-    System.Collections.Generic.List<AITool>(tools) // AIClient requires an IList<AITool>

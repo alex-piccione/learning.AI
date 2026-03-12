@@ -17,18 +17,6 @@ type WeatherAgent (agent: AIAgent) =
         """
         // "You are an information agent. Answer questions cheerfully."
 
-        //let cityLocationMethod =
-        //    match weatherTool.GetType().GetMethod(nameof(weatherTool.GetCityGeolocation)) with
-        //    | null -> failwith "Method not found"
-        //    | mi -> mi
-
-        //let cityLocationTool =
-        //    AIFunctionFactory.Create(cityLocationMethod, weatherTool) :> AITool
-
-        //let tools = List<AITool>([
-        //    cityLocationTool
-        //])
-
         let tools = WeatherTools(logger).GetTools()
 
         let client = OpenAI.OpenAIClient(apiKey)
