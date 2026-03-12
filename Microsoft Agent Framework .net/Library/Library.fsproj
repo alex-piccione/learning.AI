@@ -6,11 +6,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Library.fs" />
+    <Compile Include="Constants.fs" />
+    <Compile Include="tools\ToolsBase.fs" />
+    <Compile Include="Tools\KrakenTools.fs" />
+    <Compile Include="Tools\RandomTools.fs" />
+    <Compile Include="Tools\OpenMeteo.models.fs" />
+    <Compile Include="Tools\OpenMeteoTools.fs" />
+    <Compile Include="OpenAIClientBuilder.fs" />
+    <Compile Include="WeatherAgent.fs" />
+    <Compile Include="CryptocurrenciesAgent.fs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Alex75.KrakenApiClient" />
+    <PackageReference Include="FSharp.Core" />
+    <PackageReference Include="FsHttp" />
     <PackageReference Include="Microsoft.Agents.AI.OpenAI" />
+    <PackageReference Include="Microsoft.Extensions.Http" />
   </ItemGroup>
 
 </Project>

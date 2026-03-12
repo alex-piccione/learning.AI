@@ -3,7 +3,8 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="FSharp.Core" Version="10.0.103" />
+    <PackageVersion Include="Alex75.KrakenApiClient" Version="26.3.6-alpha.19" />
+    <PackageVersion Include="FSharp.Core" Version="11.0.100" />
     <!--
     <PackageVersion Include="Microsoft.Agents.Client" Version="1.4.83" />
     <PackageVersion Include="Microsoft.Agents.Core" Version="1.4.83" />
@@ -13,10 +14,13 @@
     
     <PackageVersion Include="Spectre.Console" Version="0.54.0" />
     -->
-    <PackageVersion Include="Microsoft.Agents.AI.OpenAI" Version="1.0.0-rc2" />
+    <PackageVersion Include="FsHttp" Version="15.0.3" />
+    <PackageVersion Include="Microsoft.Agents.AI.OpenAI" Version="1.0.0-rc3" />
     <PackageVersion Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.3" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Configuration" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="10.0.3" />
     <PackageVersion Include="OpenAI" Version="2.8.0" />
     <PackageVersion Include="Spectre.Console" Version="0.54.0" />
   </ItemGroup>
