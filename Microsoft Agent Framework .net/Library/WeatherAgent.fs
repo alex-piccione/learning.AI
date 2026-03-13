@@ -4,8 +4,8 @@ open System.Threading
 open Microsoft.Extensions.Logging
 open Microsoft.Agents.AI
 open Microsoft.Extensions.AI
-open Tools.Weather
-open System.Collections.Generic
+open Tools.OpenMeteoTools
+open Tools.ToolsBase
 
 type WeatherAgent (agent: AIAgent) =
 
@@ -18,7 +18,7 @@ type WeatherAgent (agent: AIAgent) =
         """
         // "You are an information agent. Answer questions cheerfully."
 
-        let tools = List<AITool>(WeatherTools(logger).GetTools())
+        let tools = [OpenMeteoTools(logger).GetTools()] |> asList
 
         let client = OpenAI.OpenAIClient(apiKey)
         let chatClient = client.GetChatClient(model)

@@ -1,4 +1,4 @@
-module Tools.Models.OpenMeteo
+module Tools.OpenMeteo.Models
 
 open System.Text.Json
 open System.ComponentModel

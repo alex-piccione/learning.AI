@@ -18,4 +18,8 @@ type ToolsBase() =
                     Some (AIFunctionFactory.Create(m, this) :> AITool)
         )
         tools
-        //System.Collections.Generic.List<AITool>(tools) // AIClient requires an IList<AITool>
+
+/// Convert a sequence os AITool sequence to a List that is required for the Agent contructor
+let asList (tools:AITool seq seq) =
+    let finalSeq = tools |> Seq.fold (fun state tools -> Seq.append state tools) Seq.empty<AITool>
+    System.Collections.Generic.List<AITool>(finalSeq)

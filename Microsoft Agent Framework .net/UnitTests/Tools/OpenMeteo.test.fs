@@ -10,7 +10,7 @@ let Setup () =
 [<Test>]
 let ``Forecast response is deserialized`` () =
     let json = resource_helper.readResource "openmeteo forecast.response.json"
-    let response = Tools.Models.OpenMeteo.deserialize<Tools.Models.OpenMeteo.Forecast.Response> json
+    let response = Tools.OpenMeteo.Models.deserialize<Tools.OpenMeteo.Models.Forecast.Response> json
     test <@ response.current.rain = 0.00 @>
 
 [<Test>]

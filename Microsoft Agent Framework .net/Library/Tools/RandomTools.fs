@@ -1,4 +1,4 @@
-namespace Tools.Random
+module Tools.Random
 
 open System
 open System.Threading.Tasks

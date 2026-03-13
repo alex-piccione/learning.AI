@@ -6,7 +6,8 @@ open Microsoft.Agents.AI
 open Microsoft.Extensions.AI
 
 open Tools.Kraken
-open Tools.Coingecko
+open Tools.CoingeckoTools
+open Tools.ToolsBase
 
 type CrytocurrenciesAgent (
     logger:ILogger,
@@ -17,19 +18,22 @@ type CrytocurrenciesAgent (
     ) =
 
     let name = "Cryptocurrencies Agent"
+    let description = "Specialized agent for retrieving real-time price data, market trends, and exchange info via Kraken and Coingecko APIs."
     let instructions = """
-        You are am expert about cryptocurrencies.
-    """
-    let description = """
-        Retrieve info about the cryptocurrencies.
-        When a call to some Exchange AI fails, explain the error.
+    You are a professional Crypto Analyst. 
+    Your goal is to provide accurate, real-time data using Kraken and Coingecko.
+
+    Rules:
+    1. If an API call fails, analyze the error (e.g., invalid ticker, rate limit) and explain it clearly to the user.
+    2. Always specify which exchange/source the data is coming from.
+    3. Use a concise, professional tone.
     """
 
     let krakenTools = KrakenTools(logger, krakenPublicKey, krakenPrivateKey).GetTools()
 
     let coingeckoTools = CoingeckoTools(logger, coingeckoApiKey).GetTools()
 
-    let tools = (Seq.append krakenTools coingeckoTools |> List.ofSeq) |> System.Collections.Generic.List<AITool>
+    let tools = asList [krakenTools; coingeckoTools]
     let agent = chatClient.AsIChatClient().AsAIAgent(instructions, name, description, tools)
     let session = agent.CreateSessionAsync().AsTask() |> Async.AwaitTask |> Async.RunSynchronously
 

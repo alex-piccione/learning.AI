@@ -1,11 +1,11 @@
-namespace Tools.Weather
+module Tools.OpenMeteoTools
 
 open System.Threading.Tasks
 open System.ComponentModel
 open System.Net.Http
 open Microsoft.Extensions.Logging
 
-open Tools.Models.OpenMeteo
+open Tools.OpenMeteo.Models
 open Tools.ToolsBase
 
 [<Description("Coordinates of a city")>]
@@ -20,7 +20,7 @@ type CityLocation = {
     Longitude: float
 }
 
-type WeatherTools (logger:ILogger) =
+type OpenMeteoTools (logger:ILogger) =
     inherit ToolsBase()
 
     let client = new HttpClient()
@@ -38,12 +38,13 @@ type WeatherTools (logger:ILogger) =
     }
 
     [<Description("Get the city geolocation: latitude and longitude")>]
-    member __.GetCityGeolocation([<Description("The city name")>]city: string)
+    member this.GetCityGeolocation([<Description("The city name")>]city: string)
         : Task<CityLocation> = task {
+        logger.LogDebug($"{this.GetType().Name} | GetCityGeolocation")
         let url = $"{geolocationApiBaseUrl}/search?name={city}&count=1&language=en"
         try
             let! response = client.GetAsync(url)
-            match! __.ProcessResponse<Geolocation.SearchResult>(response) with
+            match! this.ProcessResponse<Geolocation.SearchResult>(response) with
             | Error err -> return failwith $"API error. {err}"
             | Ok searchResult ->
                 if searchResult.results.Length > 0 then
@@ -62,14 +63,15 @@ type WeatherTools (logger:ILogger) =
         }
 
     [<Description("Get current weather forecast")>]
-    member __.GetCurrentWeatherValues([<Description("The latitude")>]latitude: float, [<Description("The longitude")>]longitude: float)
+    member this.GetCurrentWeatherValues([<Description("The latitude")>]latitude: float, [<Description("The longitude")>]longitude: float)
         : Task<string> = task {
+            logger.LogDebug($"{this.GetType().Name} | GetCurrentWeatherValues")
             let lat = latitude.ToString(System.Globalization.CultureInfo.InvariantCulture)
             let lon = longitude.ToString(System.Globalization.CultureInfo.InvariantCulture)
             let url = $"{apiUrlBase}/forecast?latitude={lat}&longitude={lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,rain,weather_code"
             try
                 let! response = client.GetAsync(url)
-                match! __.ProcessResponse<Forecast.Response>(response) with
+                match! this.ProcessResponse<Forecast.Response>(response) with
                 | Error err -> return failwith $"API error. {err}"
                 | Ok result ->
                     return $"{result}"
