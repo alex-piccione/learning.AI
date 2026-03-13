@@ -46,8 +46,14 @@ let openAIClientBuilder = openAIClientBuilder.OpenAIClientBuilder(openAiKey)
 
 let chatClient = OpenAIClientBuilder.BuildChatClient(openAiKey, cryptocurrencies_model)
 
-let cryptocurrenciesAgent = CrytocurrenciesAgent(logger, chatClient, config.Get "Kraken:public key", config.Get "Kraken:private key")
-let question = "What is my balance in Kraken?"
+let cryptocurrenciesAgent = CrytocurrenciesAgent(
+        logger, 
+        chatClient, 
+        config.Get "Kraken:public key", 
+        config.Get "Kraken:private key", 
+        config.Get "Coigecko:api key")
+
+let question = "What is my balance in Kraken? Retrieve the total balance in EUR."
 AnsiConsole.MarkupLine($"[cyan]{question}[/]")
 
 task {

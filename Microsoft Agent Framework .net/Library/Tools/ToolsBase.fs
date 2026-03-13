@@ -5,7 +5,7 @@ open System.Reflection
 open System.ComponentModel
 
 type ToolsBase() =
-    abstract GetTools: unit ->System.Collections.Generic.IList<AITool> 
+    abstract GetTools: unit -> AITool seq // System.Collections.Generic.IList<AITool> 
     default this.GetTools() = 
         let tools = 
             this.GetType().GetMethods(BindingFlags.Public ||| BindingFlags.Instance)
@@ -17,4 +17,5 @@ type ToolsBase() =
                     // Create the AIFunction and upcast to AITool
                     Some (AIFunctionFactory.Create(m, this) :> AITool)
         )
-        System.Collections.Generic.List<AITool>(tools) // AIClient requires an IList<AITool>
+        tools
+        //System.Collections.Generic.List<AITool>(tools) // AIClient requires an IList<AITool>

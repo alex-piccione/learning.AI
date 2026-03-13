@@ -6,8 +6,15 @@ open Microsoft.Agents.AI
 open Microsoft.Extensions.AI
 
 open Tools.Kraken
+open Tools.Coingecko
 
-type CrytocurrenciesAgent (logger:ILogger, chatClient:OpenAI.Chat.ChatClient, krakenPublicKey:string, krakenPrivateKey:string) =
+type CrytocurrenciesAgent (
+    logger:ILogger,
+    chatClient:OpenAI.Chat.ChatClient,
+    krakenPublicKey:string,
+    krakenPrivateKey:string,
+    coingeckoApiKey:string
+    ) =
 
     let name = "Cryptocurrencies Agent"
     let instructions = """
@@ -15,12 +22,14 @@ type CrytocurrenciesAgent (logger:ILogger, chatClient:OpenAI.Chat.ChatClient, kr
     """
     let description = """
         Retrieve info about the cryptocurrencies.
-        When a call to some Ezcnage AI fails, explain the error.
+        When a call to some Exchange AI fails, explain the error.
     """
 
     let krakenTools = KrakenTools(logger, krakenPublicKey, krakenPrivateKey).GetTools()
 
-    let tools = krakenTools
+    let coingeckoTools = CoingeckoTools(logger, coingeckoApiKey).GetTools()
+
+    let tools = (Seq.append krakenTools coingeckoTools |> List.ofSeq) |> System.Collections.Generic.List<AITool>
     let agent = chatClient.AsIChatClient().AsAIAgent(instructions, name, description, tools)
     let session = agent.CreateSessionAsync().AsTask() |> Async.AwaitTask |> Async.RunSynchronously
 

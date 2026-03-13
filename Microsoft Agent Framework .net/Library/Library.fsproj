@@ -7,6 +7,7 @@
     <Compile Include="Models.fs" />
     <Compile Include="tools\ToolsBase.fs" />
     <Compile Include="Tools\KrakenTools.fs" />
+    <Compile Include="tools\CoigeckoTools.fs" />
     <Compile Include="Tools\RandomTools.fs" />
     <Compile Include="Tools\OpenMeteo.models.fs" />
     <Compile Include="Tools\OpenMeteoTools.fs" />
@@ -16,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Alex75.Cryptocurrencies" />
     <PackageReference Include="Alex75.KrakenApiClient" />
     <PackageReference Include="FSharp.Core" />
     <PackageReference Include="FsHttp" />
