@@ -91,9 +91,26 @@ eval rate:            47.47 tokens/s
 
 
 
+## Thinking
 
 
+The "thinking" feature can be disabled.  
 
+# Disable thinking when running:
+``ollama run espanol-profesora --think=false``
+
+# Or use the interactive command inside a chat:
+>>> /set nothink
+
+# API call:
+from ollama import chat
+
+response = chat(
+    model='espanol-profesora',
+    messages=[{'role': 'user', 'content': 'Hola'}],
+    think=False  # ← Disable thinking
+)
+print(response['message']['content'])
 
 
 ## TO READ

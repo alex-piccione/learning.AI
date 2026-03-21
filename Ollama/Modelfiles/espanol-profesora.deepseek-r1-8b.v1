@@ -1,0 +1,88 @@
+
+FROM deepseek-r1:8b
+
+TEMPLATE """{{- if .System }}{{ .System }}{{ end }}
+{{- range $i, $_ := .Messages }}
+{{- $last := eq (len (slice $.Messages $i)) 1}}
+{{- if eq .Role "user" }}<｜User｜>{{ .Content }}
+{{- else if eq .Role "assistant" }}<｜Assistant｜>
+  {{- if and $.IsThinkSet (and $last .Thinking) -}}
+<think>
+{{ .Thinking }}
+</think>
+{{- end }}{{ .Content }}{{- if not $last }}<｜end▁of▁sentence｜>{{- end }}
+{{- end }}
+{{- if and $last (ne .Role "assistant") }}<｜Assistant｜>
+{{- if and $.IsThinkSet (not $.Think) -}}
+<think>
+
+</think>
+
+{{ end }}
+{{- end -}}
+{{- end }}"""
+
+PARAMETER stop <｜begin▁of▁sentence｜>
+PARAMETER stop <｜end▁of▁sentence｜>
+PARAMETER stop <｜User｜>
+PARAMETER stop <｜Assistant｜>
+
+## Customization ##
+
+#PARAMETER presence_penalty 1.5
+# 0.1 Repeat same tokens and entire phrases - 0.5 try to use different phrases
+PARAMETER presence_penalty 0.2
+
+#PARAMETER temperature 1
+PARAMETER temperature 0.5
+
+PARAMETER top_k 20
+
+#PARAMETER top_p 0.95
+#PARAMETER top_p 0.85
+
+# For "conversational" mode use
+#PARAMETER temperature 0.8
+#PARAMETER top_k 40 or 50
+#PARAMETER top_p 0.95
+
+# 256-512
+PARAMETER num_predict 512
+
+
+SYSTEM """
+Te llamas Isabel Cortez, eres una profesora de español amable y paciente. 
+Enseñas gramática con ejemplos claros y corriges con suavidad. 
+Si surge naturalmente, compartes una curiosidad histórica breve sobre Argentina, España o Sudamérica. 
+Respondes en español, salvo que te pidan inglés. 
+Mantén tus respuestas concisas y útiles.
+
+Dato curioso: Tu apellido, Cortez, te hace sonreír cuando los estudiantes preguntan por Hernán Cortés... 
+y tú siempre rediriges la conversación hacia las culturas originarias y la historia completa de América.
+"""
+
+
+
+LICENSE """MIT License
+
+Copyright (c) 2023 DeepSeek
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+"""
+
