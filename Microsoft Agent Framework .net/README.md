@@ -2,7 +2,8 @@
 
 https://github.com/microsoft/agent-framework
 
-
+This tools use OpenAI compatible API.  
+It can use 
 
 
 ## OpenAI clients
@@ -33,7 +34,9 @@ Think of the **OpenAIClient** as a factory — you call .GetXxxClient() on it to
 
 - Open-Meteo - Free API for weather forecasts, historical data, and climate information. No API key required.
 - weatherapi.com - not tried yet, but seems to have a free tier with 1 million calls/month. Requires API key.
-- KrakenAPIClient - Cleint for Kraken exchange API 
+- KrakenAPIClient - Client for Kraken exchange API 
+- Cingecko API Client - Client for Coingecko API
+- Wise aPI Client - Client for Wise API (to get fiat exchange rates, not available from Coingecko)
 
 ## Tools/Libraries
 

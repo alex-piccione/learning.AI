@@ -7,12 +7,12 @@ open Helper
 open Agents.Wheater
 open Spectre.Console
 open Agents.Cryptocurrencies
-open openAIClientBuilder
+open OpenAIClientBuilder
 
 let ct = CancellationToken()
 
 let logger = 
-    Microsoft.Extensions.Logging.LoggerFactory.Create( // not disposed
+    LoggerFactory.Create( // not disposed
         fun builder -> 
             builder
                 .AddConsole() 
@@ -28,10 +28,11 @@ let config =
 
 let weather_model = Models.OpenAI.GPT_5_mini
 let cryptocurrencies_model = Models.OpenAI.GPT_5_2
+let localOllama_model = "phi3.5:3.8b"
 
-let openAiKey = config.Get "OpenAI:API_KEY"
+let openAIKey = config.Get "OpenAI:API_KEY"
 
-let wheatherAgent = WeatherAgent.CreateChatClientUsingOpenAI(logger, openAiKey, weather_model)
+let wheatherAgent = WeatherAgent.CreateChatClientUsingOpenAI(logger, openAIKey, weather_model)
 
 (*
 //let question = AnsiConsole.Ask<string>("[bold green]Ask the agent about the weather:[/]")
@@ -42,9 +43,10 @@ let response = wheatherAgent.Ask(question, CancellationToken.None) |> Async.RunS
 AnsiConsole.MarkupLine($"[yellow]{response}[/]")
 *)
 
-let openAIClientBuilder = openAIClientBuilder.OpenAIClientBuilder(openAiKey)
-
-let chatClient = OpenAIClientBuilder.BuildChatClient(openAiKey, cryptocurrencies_model)
+let chatClient = 
+    match Settings.service with
+    | Settings.AIService.OpenAI -> OpenAIClientBuilder.BuildOpenAIChatClient(openAIKey, cryptocurrencies_model)
+    | Settings.AIService.LocalOllama -> OpenAIClientBuilder.BuildLocalOllamaChatClient localOllama_model
 
 let cryptocurrenciesAgent = CrytocurrenciesAgent(
         logger, 

@@ -12,7 +12,7 @@ open Tools.Wise
 
 type CrytocurrenciesAgent (
     logger:ILogger,
-    chatClient:OpenAI.Chat.ChatClient,
+    chatClient:IChatClient,
     krakenPublicKey:string,
     krakenPrivateKey:string,
     coingeckoApiKey:string,
@@ -32,19 +32,16 @@ type CrytocurrenciesAgent (
     """
 
     let krakenTools = KrakenTools(logger, krakenPublicKey, krakenPrivateKey).GetTools()
-
     let coingeckoTools = CoingeckoTools(logger, coingeckoApiKey).GetTools()
-
     let wiseTools = WiseTools(logger, wiseApiKey).GetTools()
 
     let tools = asList [krakenTools; coingeckoTools; wiseTools]
-    
-    let agent = chatClient.AsIChatClient().AsAIAgent(instructions, name, description, tools)
+
+    let agent = chatClient.AsAIAgent(instructions, name, description, tools)    
     let session = agent.CreateSessionAsync().AsTask() |> Async.AwaitTask |> Async.RunSynchronously
 
     member _.Ask (question:string, ct:CancellationToken) = task {
         let options:AgentRunOptions = AgentRunOptions()
         let! response = agent.RunAsync(question, session, options, ct)
-
         return response.ToString()
     }
