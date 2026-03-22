@@ -28,7 +28,6 @@ let config =
 
 let weather_model = Models.OpenAI.GPT_5_mini
 let cryptocurrencies_model = Models.OpenAI.GPT_5_2
-let localOllama_model = "phi3.5:3.8b"
 
 let openAIKey = config.Get "OpenAI:API_KEY"
 
@@ -46,7 +45,7 @@ AnsiConsole.MarkupLine($"[yellow]{response}[/]")
 let chatClient = 
     match Settings.service with
     | Settings.AIService.OpenAI -> OpenAIClientBuilder.BuildOpenAIChatClient(openAIKey, cryptocurrencies_model)
-    | Settings.AIService.LocalOllama -> OpenAIClientBuilder.BuildLocalOllamaChatClient localOllama_model
+    | Settings.AIService.LocalOllama -> OpenAIClientBuilder.BuildLocalOllamaChatClient Settings.OllamaModel
 
 let cryptocurrenciesAgent = CrytocurrenciesAgent(
         logger, 
@@ -69,3 +68,22 @@ task {
 |> Async.RunSynchronously
 
 ()
+
+
+(*
+curl http://localhost:11434/api/chat -d '{
+"model": "phi3.5:3.8b",
+"messages": [
+  {
+    "role": "user",
+    "content": "why is the sky blue?"
+  }
+]
+}'
+
+curl http://localhost:11434/api/generate -d '{
+"model": "llama3.2:1b",
+"prompt": "Why is the sky blue?"
+}'
+
+*)
