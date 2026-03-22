@@ -12,12 +12,15 @@ open Tools.Coingecko.Models
 type CoingeckoTools (logger: ILogger, apiKey: string) =
     inherit ToolsBase()
 
-    let client = CoingeckoClientDemo(apiKey)
+    let client = CoingeckoApiClientDemo(apiKey)
 
     [<Description("Retrieve the price (exhange rate) of the currency pair main/quote. It uses Coingecko Demo API.")>]
-    member this.GetRate(main:string, quote:string) : Task<decimal> = 
+    member this.GetRate(main:string, quote:string) : Task<CurrencyPairRate> = task {
         logger.LogDebug($"{this.GetType().Name} | Call to GetRate | Start")
-        client.GetSinglePairRateAsync(CurrencyPair(main, quote))
+
+        let! rate =  client.GetSinglePairRateAsync(CurrencyPair(main, quote))
+        return { Main=main; Quote=quote; Rate=rate }
+    }
     
 
     [<Description("Retrieve the price (exhange rate) of the currency pairs provided. It uses Coingecko Demo API.")>]

@@ -8,13 +8,15 @@ open Microsoft.Extensions.AI
 open Tools.Kraken
 open Tools.CoingeckoTools
 open Tools.ToolsBase
+open Tools.Wise
 
 type CrytocurrenciesAgent (
     logger:ILogger,
     chatClient:OpenAI.Chat.ChatClient,
     krakenPublicKey:string,
     krakenPrivateKey:string,
-    coingeckoApiKey:string
+    coingeckoApiKey:string,
+    wiseApiKey:string
     ) =
 
     let name = "Cryptocurrencies Agent"
@@ -33,7 +35,10 @@ type CrytocurrenciesAgent (
 
     let coingeckoTools = CoingeckoTools(logger, coingeckoApiKey).GetTools()
 
-    let tools = asList [krakenTools; coingeckoTools]
+    let wiseTools = WiseTools(logger, wiseApiKey).GetTools()
+
+    let tools = asList [krakenTools; coingeckoTools; wiseTools]
+    
     let agent = chatClient.AsIChatClient().AsAIAgent(instructions, name, description, tools)
     let session = agent.CreateSessionAsync().AsTask() |> Async.AwaitTask |> Async.RunSynchronously
 
