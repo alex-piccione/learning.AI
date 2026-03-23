@@ -6,19 +6,20 @@ open Alex75.KrakenApiClient
 open ToolsBase
 
 type KrakenTools (logger:ILogger, krakenPublicKey, kakenSecretKey) =
-    inherit ToolsBase()
+    inherit ToolsBase(logger)
 
     let client = Client(krakenPublicKey, kakenSecretKey) :> IClient
 
     [<Description("Retrieve the balances of the owned currencies (crypto and fiat) in the Kraken exchange")>]
     member this.GetBalance () = task {
+        this.LogCall "GetBalance" None
         logger.LogInformation($"{this.GetType().Name} | Call to GetBalance | Start")
         try 
             let! balance = client.GetBalance()
-            logger.LogInformation($"{this.GetType().Name} | Call to GetBalance | Success")
+            //logger.LogDebug($"{this.GetType().Name} | Call to GetBalance | Success")
             return balance
             
         with ex -> 
-            logger.LogError($"{this.GetType().Name} | Call to GetBalance | Failed. {ex}")
+            this.LogError "GetBalance" ex
             return failwith $"Failed to call Kraken API. {ex}"
     }

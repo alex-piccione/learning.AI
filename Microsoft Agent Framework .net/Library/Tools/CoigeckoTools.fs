@@ -10,27 +10,30 @@ open Tools.ToolsBase
 open Tools.Coingecko.Models
 
 type CoingeckoTools (logger: ILogger, apiKey: string) =
-    inherit ToolsBase()
+    inherit ToolsBase(logger)
 
     let client = CoingeckoApiClientDemo(apiKey)
 
     [<Description("Retrieve the price (exhange rate) of the currency pair main/quote. It uses Coingecko Demo API.")>]
     member this.GetRate(main:string, quote:string) : Task<CurrencyPairRate> = task {
-        logger.LogDebug($"{this.GetType().Name} | Call to GetRate | Start")
+        this.LogCall "GetRate" (Some $"{main}/{quote})") //($"{this.GetType().Name} | Call to  | Start  ({main}/{quote})")
 
         let! rate =  client.GetSinglePairRateAsync(CurrencyPair(main, quote))
+        logger.LogDebug($"{this.GetType().Name} | Call to GetRate | Sucecss")
         return { Main=main; Quote=quote; Rate=rate }
     }
     
 
     [<Description("Retrieve the price (exhange rate) of the currency pairs provided. It uses Coingecko Demo API.")>]
     member this.GetRates(mains:string seq, quotes:string seq) : Task<CurrencyPairRate list>  = task {
-        logger.LogDebug($"{this.GetType().Name} | Call to GetRates | Start")
+        this.LogCall "GteRates" (Some $"""{(String.concat ", " mains)}""")
 
         let! apiResult = (client.GetPairsRateAsync(
             mains   |> Seq.map (fun m -> Currency(m)),
             quotes  |> Seq.map (fun q -> Currency(q))
         ))
+
+        logger.LogDebug($"{this.GetType().Name} | Call to GetRates | Success")
 
         return CurrencyPairRate.fromApiResponse apiResult
     }

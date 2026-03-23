@@ -8,7 +8,7 @@ open Alex75.Cryptocurrencies.Services.Wise
 open ToolsBase
 
 type WiseTools (logger:ILogger, apiKey) =
-    inherit ToolsBase()
+    inherit ToolsBase(logger)
 
     let client = WiseApiClient(apiKey)
 
@@ -19,12 +19,12 @@ type WiseTools (logger:ILogger, apiKey) =
         [<Description("The Quote currency in the main/quote pair.")>]
         quote:string): Task<decimal> = task {
         let pair = CurrencyPair(main, quote)
-        logger.LogDebug($"{this.GetType().Name} | Call to GetExchangeRate | Start. ({main}/{quote})")
+        this.LogCall "GetExchangeRate" (Some $"{main}/{quote}")
         try 
             let! rate = client.GetExchangeRate(pair)
-            logger.LogDebug($"{this.GetType().Name} | Call to GetExchangeRate | Success")
+            //logger.LogDebug($"{this.GetType().Name} | Call to GetExchangeRate | Success")
             return rate
         with ex -> 
-            logger.LogError($"{this.GetType().Name} | Call to GetExchangeRate | Failed. {ex}")
+            this.LogError "GetExchangeRate" ex
             return failwith $"Failed to call Wise API. {ex}"
     }

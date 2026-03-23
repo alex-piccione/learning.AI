@@ -19,26 +19,20 @@ type CrytocurrenciesAgent (
     wiseApiKey:string
     ) =
 
-    let name = "Cryptocurrencies Agent"
-    let description = "Specialized agent for retrieving real-time price data, market trends, and exchange info via Kraken and Coingecko APIs."
-    let instructions = """
-    You are a professional Crypto Analyst. 
-    Your goal is to provide accurate, real-time data using Kraken and Coingecko.
-
-    Rules:
-    1. If an API call fails, analyze the error (e.g., invalid ticker, rate limit) and explain it clearly to the user.
-    2. Always specify which exchange/source the data is coming from.
-    3. Use a concise, professional tone.
-    """
-
     let krakenTools = KrakenTools(logger, krakenPublicKey, krakenPrivateKey).GetTools()
     let coingeckoTools = CoingeckoTools(logger, coingeckoApiKey).GetTools()
     let wiseTools = WiseTools(logger, wiseApiKey).GetTools()
 
     let tools = asList [krakenTools; coingeckoTools; wiseTools]
 
-    let agent = chatClient.AsAIAgent(instructions, name, description, tools)    
+    // select a settings
+    let settings = Agents.Settings.Cryptocurrency.V2
+
+    let agent = chatClient.AsAIAgent(settings.Instructions, settings.Name, settings.Description, tools)
     let session = agent.CreateSessionAsync().AsTask() |> Async.AwaitTask |> Async.RunSynchronously
+
+    member _.Name = settings.Name
+    member _.Instructions = settings.Instructions
 
     member _.Ask (question:string, ct:CancellationToken) = task {
         let options:AgentRunOptions = AgentRunOptions()

@@ -21,7 +21,7 @@ type CityLocation = {
 }
 
 type OpenMeteoTools (logger:ILogger) =
-    inherit ToolsBase()
+    inherit ToolsBase(logger)
 
     let client = new HttpClient()
     static let apiUrlBase = "https://api.open-meteo.com/v1"
@@ -40,7 +40,8 @@ type OpenMeteoTools (logger:ILogger) =
     [<Description("Get the city geolocation: latitude and longitude")>]
     member this.GetCityGeolocation([<Description("The city name")>]city: string)
         : Task<CityLocation> = task {
-        logger.LogDebug($"{this.GetType().Name} | GetCityGeolocation")
+        this.LogCall "GetCityGeolocation" (Some city)
+        
         let url = $"{geolocationApiBaseUrl}/search?name={city}&count=1&language=en"
         try
             let! response = client.GetAsync(url)
@@ -57,15 +58,15 @@ type OpenMeteoTools (logger:ILogger) =
                 else
                     return failwith $"No geolocation found for city: {city}"
 
-        with exn ->
-            logger.LogError(exn, "Error calling geolocation API")
-            return failwith $"Error calling geolocation API: {exn.Message}"
+        with ex ->
+            this.LogError "GetCityGeolocation" ex
+            return failwith $"Error calling geolocation API: {ex.Message}"
         }
 
     [<Description("Get current weather forecast")>]
     member this.GetCurrentWeatherValues([<Description("The latitude")>]latitude: float, [<Description("The longitude")>]longitude: float)
         : Task<string> = task {
-            logger.LogDebug($"{this.GetType().Name} | GetCurrentWeatherValues")
+            this.LogCall "GetCurrentWeatherValues" (Some $"Lat:{latitude} Long:{longitude}")
             let lat = latitude.ToString(System.Globalization.CultureInfo.InvariantCulture)
             let lon = longitude.ToString(System.Globalization.CultureInfo.InvariantCulture)
             let url = $"{apiUrlBase}/forecast?latitude={lat}&longitude={lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,rain,weather_code"
@@ -79,7 +80,7 @@ type OpenMeteoTools (logger:ILogger) =
                     //    City = result.hourly
                     //}
 
-            with exn ->
-                logger.LogError(exn, "Error calling current weather forecast")
-                return failwith $"Error calling current weather forecast: {exn.Message}"
+            with ex ->
+                this.LogError "GetCurrentWeatherValues" ex
+                return failwith $"Error calling current weather forecast: {ex.Message}"
         }

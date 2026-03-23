@@ -15,4 +15,30 @@ qwen3.5:4b or qwen3.5:2b (3.4GB/2.7GB, good multilingual/tools, but finicky—te
 nemotron-3-nano:4b-q8_0 (4.2GB, solid tools).
 *)
 
-let OllamaModel = "nemotron-3-nano:4b-q8_0"
+let OllamaModel
+    //= "llama3.2:3b"
+    = "llama3.1:8b"
+    //= "nemotron-3-nano:4b-q8_0"
+    //= "llama3-groq-tool-use"
+
+
+(*
+
+| Model                | Agent | Result | Note                                                            | 
+|----------------------|-------|--------|-----------------------------------------------------------------|
+| llama3.1:8b          | V1    | ❌     | No usage of Coingecko tool.                                     |
+| llama3.2:3b          | V1    | ❌     | No usage of Coingecko tool.                                     |
+| dolphin-llama3:8b    | V1    | ❌     | No usage of Coingecko tool. LIED about it ⚠️ (said it used it)  |
+| llama3.1:8b          | V2    | ✅     | No usage of Coingecko tool. LIED about it ⚠️ (said it used it)  |
+
+
+
+✅ or ✔️
+❌ or ⚠️
+🤖
+🤔 or 🧠
+💡
+🎯 Target
+⚙️ Settings
+🛠️ Tools
+*)

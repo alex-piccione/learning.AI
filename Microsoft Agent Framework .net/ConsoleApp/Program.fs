@@ -11,11 +11,11 @@ open OpenAIClientBuilder
 
 let ct = CancellationToken()
 
-let logger = 
+let logger =
     LoggerFactory.Create( // not disposed
-        fun builder -> 
+        fun builder ->
             builder
-                .AddConsole() 
+                .AddConsole()
                 .SetMinimumLevel(LogLevel.Debug) // Set minimum log level to Debug
             |> ignore
         ).CreateLogger("ConsoleApp")
@@ -42,48 +42,31 @@ let response = wheatherAgent.Ask(question, CancellationToken.None) |> Async.RunS
 AnsiConsole.MarkupLine($"[yellow]{response}[/]")
 *)
 
-let chatClient = 
+let chatClient, model =
     match Settings.service with
     | Settings.AIService.OpenAI -> OpenAIClientBuilder.BuildOpenAIChatClient(openAIKey, cryptocurrencies_model)
     | Settings.AIService.LocalOllama -> OpenAIClientBuilder.BuildLocalOllamaChatClient Settings.OllamaModel
 
 let cryptocurrenciesAgent = CrytocurrenciesAgent(
-        logger, 
-        chatClient, 
-        config.Get "Kraken:public key", 
-        config.Get "Kraken:private key", 
+        logger,
+        chatClient,
+        config.Get "Kraken:public key",
+        config.Get "Kraken:private key",
         config.Get "Coigecko:api key",
         config.Get "Wise:api key"
         )
 
-let question = "What is my balance in Kraken? Retrieve the total balance in EUR."
-//let question = "What is the exchange rate of GBP/EUR ?"
+AnsiConsole.MarkupLine $"🤖 Cryptocurrencies Agent [blue]{cryptocurrenciesAgent.Name}[/] using model 🧠 [red]{model}[/] ({Settings.service})."
+
+let question = "What is my balance on Kraken, considering all the tokens? Calculate the balances in EUR and give me also the total. Give me a table in the answer."
+//let question = "What is the exchange rates of GBP/EUR and USD/EUR?"
 AnsiConsole.MarkupLine($"[cyan]{question}[/]")
 
 task {
     let! response = cryptocurrenciesAgent.Ask(question, ct)
-    AnsiConsole.MarkupLine($"[yellow]{response}[/]")
+    AnsiConsole.MarkupLine($"[yellow]{Markup.Escape response}[/]")
 }
 |> Async.AwaitTask
 |> Async.RunSynchronously
 
 ()
-
-
-(*
-curl http://localhost:11434/api/chat -d '{
-"model": "phi3.5:3.8b",
-"messages": [
-  {
-    "role": "user",
-    "content": "why is the sky blue?"
-  }
-]
-}'
-
-curl http://localhost:11434/api/generate -d '{
-"model": "llama3.2:1b",
-"prompt": "Why is the sky blue?"
-}'
-
-*)

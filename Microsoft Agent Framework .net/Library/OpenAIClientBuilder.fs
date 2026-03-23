@@ -8,13 +8,13 @@ type OpenAIClientBuilder () =
 
     /// Create a OpenAI Chat Client
     static member BuildOpenAIChatClient(apiKey:string, model:string) =
-        OpenAI.Chat.ChatClient(model, apiKey).AsIChatClient()
+        OpenAI.Chat.ChatClient(model, apiKey).AsIChatClient(), model
 
     static member BuildLocalOllamaChatClient(model:string) =
         let credentials = ClientModel.ApiKeyCredential "not required"
         let options = OpenAI.OpenAIClientOptions()
         options.Endpoint <- Uri "http://localhost:11434/v1"
-        OpenAI.Chat.ChatClient(model, credentials, options).AsIChatClient()
+        OpenAI.Chat.ChatClient(model, credentials, options).AsIChatClient(), model
 
     (*
     using Microsoft.Extensions.AI;

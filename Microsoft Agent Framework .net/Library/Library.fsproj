@@ -13,9 +13,10 @@
     <Compile Include="Tools\RandomTools.fs" />
     <Compile Include="Tools\OpenMeteo.models.fs" />
     <Compile Include="Tools\OpenMeteoTools.fs" />
+    <Compile Include="Agents\Settings\Cryptocurrency.fs" />
+    <Compile Include="Agents\WeatherAgent.fs" />
+    <Compile Include="Agents\CryptocurrenciesAgent.fs" />
     <Compile Include="OpenAIClientBuilder.fs" />
-    <Compile Include="WeatherAgent.fs" />
-    <Compile Include="CryptocurrenciesAgent.fs" />
   </ItemGroup>
 
   <ItemGroup>
