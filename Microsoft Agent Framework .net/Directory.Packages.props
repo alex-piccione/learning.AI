@@ -4,6 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="Alex75.Cryptocurrencies" Version="26.3.19-alpha.59" />
+    <PackageVersion Include="BoxOfYellow.ConsoleMarkdownRenderer" Version="0.7.9" />
     <PackageVersion Include="Foq" Version="1.8.0" />
     <PackageVersion Include="FSharp.Core" Version="11.0.100" />
     <PackageVersion Include="FsHttp" Version="15.0.3" />

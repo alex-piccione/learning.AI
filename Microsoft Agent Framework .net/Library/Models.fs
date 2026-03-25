@@ -13,3 +13,10 @@ module Models
         let Kimi = "kimi-k2.5"
 
         let MiniMax = "MiniMax-M2.5"
+
+    module public GitHub =
+        let GPT_5_2 = "gpt-5.2"
+
+    module public Mistral =
+        let MINISTRAL_14b_2512 = "ministral-14b-2512"
+        let MISTRAL_MEDIUM_2505 = "mistral-medium-2505"

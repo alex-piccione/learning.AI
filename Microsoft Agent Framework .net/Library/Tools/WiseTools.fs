@@ -14,15 +14,16 @@ type WiseTools (logger:ILogger, apiKey) =
 
     [<Description("Retrieve the exchange rate (fiat over fiat) from Wise API")>]
     member this.GetExchangeRate (
-        [<Description("The Main currency in the main/quote pair")>]
+        [<Description("The Main currency in the main/quote pair.")>]
         main:string, 
         [<Description("The Quote currency in the main/quote pair.")>]
         quote:string): Task<decimal> = task {
+
         let pair = CurrencyPair(main, quote)
         this.LogCall "GetExchangeRate" (Some $"{main}/{quote}")
         try 
             let! rate = client.GetExchangeRate(pair)
-            //logger.LogDebug($"{this.GetType().Name} | Call to GetExchangeRate | Success")
+            logger.LogDebug($"{main}/{quote} = {rate}")
             return rate
         with ex -> 
             this.LogError "GetExchangeRate" ex

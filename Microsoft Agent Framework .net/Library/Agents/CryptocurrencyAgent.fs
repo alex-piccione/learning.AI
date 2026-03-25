@@ -1,4 +1,4 @@
-namespace Agents.Cryptocurrencies
+namespace Agents.Cryptocurrency
 
 open System.Threading
 open Microsoft.Extensions.Logging
@@ -10,7 +10,7 @@ open Tools.CoingeckoTools
 open Tools.ToolsBase
 open Tools.Wise
 
-type CrytocurrenciesAgent (
+type CryptocurrencyAgent (
     logger:ILogger,
     chatClient:IChatClient,
     krakenPublicKey:string,
@@ -26,7 +26,7 @@ type CrytocurrenciesAgent (
     let tools = asList [krakenTools; coingeckoTools; wiseTools]
 
     // select a settings
-    let settings = Agents.Settings.Cryptocurrency.V2
+    let settings = Agents.Settings.Cryptocurrency.V3
 
     let agent = chatClient.AsAIAgent(settings.Instructions, settings.Name, settings.Description, tools)
     let session = agent.CreateSessionAsync().AsTask() |> Async.AwaitTask |> Async.RunSynchronously

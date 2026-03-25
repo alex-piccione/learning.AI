@@ -3,6 +3,11 @@ module OpenAIClientBuilder
 open System
 open Microsoft.Extensions.AI
 
+type LLMProvider =
+    | AliBaba
+    | GitHub
+    | Mistral
+
 /// Helper for create OpenAI Client
 type OpenAIClientBuilder () =
 
@@ -14,6 +19,19 @@ type OpenAIClientBuilder () =
         let credentials = ClientModel.ApiKeyCredential "not required"
         let options = OpenAI.OpenAIClientOptions()
         options.Endpoint <- Uri "http://localhost:11434/v1"
+        OpenAI.Chat.ChatClient(model, credentials, options).AsIChatClient(), model
+
+    static member BuildOpenAICompatibleChatClient(provider:LLMProvider, apiKey:string, model:string) =
+
+        let url = 
+            match provider with
+            | LLMProvider.AliBaba -> Constants.LLMProviders.ALIBABA_AI_URL
+            | LLMProvider.GitHub -> Constants.LLMProviders.GITHUB_AI_URL
+            | LLMProvider.Mistral -> Constants.LLMProviders.MISTRAL_AI_URL
+
+        let credentials = ClientModel.ApiKeyCredential apiKey
+        let options = OpenAI.OpenAIClientOptions()
+        options.Endpoint <- Uri url
         OpenAI.Chat.ChatClient(model, credentials, options).AsIChatClient(), model
 
     (*

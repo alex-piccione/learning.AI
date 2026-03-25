@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BoxOfYellow.ConsoleMarkdownRenderer" />
     <PackageReference Include="FSharp.Core" />
     <PackageReference Include="Microsoft.Extensions.Configuration" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />

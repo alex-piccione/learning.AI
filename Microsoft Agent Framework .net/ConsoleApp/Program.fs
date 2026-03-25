@@ -6,7 +6,7 @@ open Microsoft.Extensions.Logging
 open Helper
 open Agents.Wheater
 open Spectre.Console
-open Agents.Cryptocurrencies
+open Agents.Cryptocurrency
 open OpenAIClientBuilder
 
 let ct = CancellationToken()
@@ -29,7 +29,10 @@ let config =
 let weather_model = Models.OpenAI.GPT_5_mini
 let cryptocurrencies_model = Models.OpenAI.GPT_5_2
 
-let openAIKey = config.Get "OpenAI:API_KEY"
+let openAIKey = config.Get "OpenAI api key"
+let alibabaApiKey = config.Get "AliBaba api key"
+let githubToken = config.Get "GitHub token"
+let mistralApiKey = config.Get "Mistral api key"
 
 let wheatherAgent = WeatherAgent.CreateChatClientUsingOpenAI(logger, openAIKey, weather_model)
 
@@ -44,10 +47,13 @@ AnsiConsole.MarkupLine($"[yellow]{response}[/]")
 
 let chatClient, model =
     match Settings.service with
-    | Settings.AIService.OpenAI -> OpenAIClientBuilder.BuildOpenAIChatClient(openAIKey, cryptocurrencies_model)
+    | Settings.AIService.OpenAI -> OpenAIClientBuilder.BuildOpenAIChatClient (openAIKey, cryptocurrencies_model)
     | Settings.AIService.LocalOllama -> OpenAIClientBuilder.BuildLocalOllamaChatClient Settings.OllamaModel
+    | Settings.AIService.AliBaba -> OpenAIClientBuilder.BuildOpenAICompatibleChatClient (LLMProvider.AliBaba, alibabaApiKey, Models.Alibaba.Qwen)
+    | Settings.AIService.GitHub -> OpenAIClientBuilder.BuildOpenAICompatibleChatClient (LLMProvider.GitHub, githubToken, Models.GitHub.GPT_5_2)
+    | Settings.AIService.Mistral -> OpenAIClientBuilder.BuildOpenAICompatibleChatClient (LLMProvider.Mistral, mistralApiKey, Models.Mistral.MISTRAL_MEDIUM_2505)
 
-let cryptocurrenciesAgent = CrytocurrenciesAgent(
+let cryptocurrencyAgent = CryptocurrencyAgent(
         logger,
         chatClient,
         config.Get "Kraken:public key",
@@ -56,15 +62,17 @@ let cryptocurrenciesAgent = CrytocurrenciesAgent(
         config.Get "Wise:api key"
         )
 
-AnsiConsole.MarkupLine $"🤖 Cryptocurrencies Agent [blue]{cryptocurrenciesAgent.Name}[/] using model 🧠 [red]{model}[/] ({Settings.service})."
+AnsiConsole.MarkupLine $"🤖 Cryptocurrencies Agent [blue]{cryptocurrencyAgent.Name}[/] using model 🧠 [red]{model}[/] ({Settings.service})."
 
 let question = "What is my balance on Kraken, considering all the tokens? Calculate the balances in EUR and give me also the total. Give me a table in the answer."
 //let question = "What is the exchange rates of GBP/EUR and USD/EUR?"
 AnsiConsole.MarkupLine($"[cyan]{question}[/]")
 
 task {
-    let! response = cryptocurrenciesAgent.Ask(question, ct)
-    AnsiConsole.MarkupLine($"[yellow]{Markup.Escape response}[/]")
+    let! response = cryptocurrencyAgent.Ask(question, ct)
+    //AnsiConsole.MarkupLine($"[yellow]{Markup.Escape response}[/]")
+    //let markdown = Markdown.Parse(response);
+    do! ConsoleMarkdownRenderer.Displayer.DisplayMarkdownAsync(response)
 }
 |> Async.AwaitTask
 |> Async.RunSynchronously
