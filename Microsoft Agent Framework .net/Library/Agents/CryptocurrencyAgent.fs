@@ -37,5 +37,5 @@ type CryptocurrencyAgent (
     member _.Ask (question:string, ct:CancellationToken) = task {
         let options:AgentRunOptions = AgentRunOptions()
         let! response = agent.RunAsync(question, session, options, ct)
-        return response.ToString()
+        return response
     }

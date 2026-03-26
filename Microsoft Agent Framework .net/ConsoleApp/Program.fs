@@ -49,9 +49,9 @@ let chatClient, model =
     match Settings.service with
     | Settings.AIService.OpenAI -> OpenAIClientBuilder.BuildOpenAIChatClient (openAIKey, cryptocurrencies_model)
     | Settings.AIService.LocalOllama -> OpenAIClientBuilder.BuildLocalOllamaChatClient Settings.OllamaModel
-    | Settings.AIService.AliBaba -> OpenAIClientBuilder.BuildOpenAICompatibleChatClient (LLMProvider.AliBaba, alibabaApiKey, Models.Alibaba.Qwen)
-    | Settings.AIService.GitHub -> OpenAIClientBuilder.BuildOpenAICompatibleChatClient (LLMProvider.GitHub, githubToken, Models.GitHub.GPT_5_2)
-    | Settings.AIService.Mistral -> OpenAIClientBuilder.BuildOpenAICompatibleChatClient (LLMProvider.Mistral, mistralApiKey, Models.Mistral.MISTRAL_MEDIUM_2505)
+    | Settings.AIService.AliBaba -> OpenAIClientBuilder.BuildOpenAICompatibleChatClient (LLMProvider.AliBaba, alibabaApiKey, Models.Alibaba.Qwen_3_5_plus)
+    | Settings.AIService.GitHub -> OpenAIClientBuilder.BuildOpenAICompatibleChatClient (LLMProvider.GitHub, githubToken, Models.GitHub.Phi_4_mini_instruct)
+    | Settings.AIService.Mistral -> OpenAIClientBuilder.BuildOpenAICompatibleChatClient (LLMProvider.Mistral, mistralApiKey, Models.Mistral.MINISTRAL_14b_2512)
 
 let cryptocurrencyAgent = CryptocurrencyAgent(
         logger,
@@ -72,7 +72,12 @@ task {
     let! response = cryptocurrencyAgent.Ask(question, ct)
     //AnsiConsole.MarkupLine($"[yellow]{Markup.Escape response}[/]")
     //let markdown = Markdown.Parse(response);
-    do! ConsoleMarkdownRenderer.Displayer.DisplayMarkdownAsync(response)
+
+    match response.Usage with 
+    | null -> ()
+    | usage -> renderUsage usage    
+
+    do! ConsoleMarkdownRenderer.Displayer.DisplayMarkdownAsync(response.Text)
 }
 |> Async.AwaitTask
 |> Async.RunSynchronously
