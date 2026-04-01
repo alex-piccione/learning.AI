@@ -2,8 +2,12 @@ module Tools.Kraken
 
 open Microsoft.Extensions.Logging
 open System.ComponentModel
+open System.Threading.Tasks
 open Alex75.KrakenApiClient
+open Alex75.Cryptocurrencies
 open ToolsBase
+open KrakenModels
+
 
 type KrakenTools (logger:ILogger, krakenPublicKey, kakenSecretKey) =
     inherit ToolsBase(logger)
@@ -19,5 +23,17 @@ type KrakenTools (logger:ILogger, krakenPublicKey, kakenSecretKey) =
 
         with ex -> 
             this.LogError "GetBalance" ex
+            return failwith $"Failed to call Kraken API. {ex}"
+    }
+
+    [<Description("Retrieve the market ticker of the given currency pair in the Kraken exchange")>]
+    member this.GetTicker (main:string, quote:string): Task<Ticker> = task {
+        this.LogCall "GetTicker" (Some $"{main}/{quote}")
+        try 
+            let! ticker = client.GetTicker(CurrencyPair(main, quote))
+            return Ticker.FromApiTicker ticker
+
+        with ex -> 
+            this.LogError "GetTicker" ex
             return failwith $"Failed to call Kraken API. {ex}"
     }

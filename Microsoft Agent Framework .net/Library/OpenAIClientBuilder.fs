@@ -1,6 +1,7 @@
 module OpenAIClientBuilder
 
 open System
+open OpenAI
 open Microsoft.Extensions.AI
 
 type LLMProvider =
@@ -12,16 +13,18 @@ type LLMProvider =
 type OpenAIClientBuilder () =
 
     /// Create a OpenAI Chat Client
-    static member BuildOpenAIChatClient(apiKey:string, model:string) =
-        OpenAI.Chat.ChatClient(model, apiKey).AsIChatClient(), model
+    static member BuildOpenAIChatClient(apiKey:string, model:string):IChatClient * string =
+        //OpenAI.Chat.ChatClient(model, apiKey).AsIChatClient(), model
+        OpenAIClient(apiKey).GetChatClient(model).AsIChatClient(), model
 
-    static member BuildLocalOllamaChatClient(model:string) =
+    static member BuildLocalOllamaChatClient(model:string):IChatClient * string =
         let credentials = ClientModel.ApiKeyCredential "not required"
         let options = OpenAI.OpenAIClientOptions()
         options.Endpoint <- Uri "http://localhost:11434/v1"
-        OpenAI.Chat.ChatClient(model, credentials, options).AsIChatClient(), model
+        //OpenAI.Chat.ChatClient(model, credentials, options).AsIChatClient(), model
+        OpenAIClient(credentials, options).GetChatClient(model).AsIChatClient(), model
 
-    static member BuildOpenAICompatibleChatClient(provider:LLMProvider, apiKey:string, model:string) =
+    static member BuildOpenAICompatibleChatClient(provider:LLMProvider, apiKey:string, model:string):IChatClient * string =
 
         let url = 
             match provider with
@@ -32,7 +35,8 @@ type OpenAIClientBuilder () =
         let credentials = ClientModel.ApiKeyCredential apiKey
         let options = OpenAI.OpenAIClientOptions()
         options.Endpoint <- Uri url
-        OpenAI.Chat.ChatClient(model, credentials, options).AsIChatClient(), model
+        //OpenAI.Chat.ChatClient(model, credentials, options).AsIChatClient(), model
+        OpenAIClient(credentials, options).GetChatClient(model).AsIChatClient(), model
 
     (*
     using Microsoft.Extensions.AI;

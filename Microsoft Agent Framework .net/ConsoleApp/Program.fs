@@ -49,7 +49,7 @@ let chatClient, model =
     match Settings.service with
     | Settings.AIService.OpenAI -> OpenAIClientBuilder.BuildOpenAIChatClient (openAIKey, cryptocurrencies_model)
     | Settings.AIService.LocalOllama -> OpenAIClientBuilder.BuildLocalOllamaChatClient Settings.OllamaModel
-    | Settings.AIService.AliBaba -> OpenAIClientBuilder.BuildOpenAICompatibleChatClient (LLMProvider.AliBaba, alibabaApiKey, Models.Alibaba.Qwen_3_5_plus)
+    | Settings.AIService.AliBaba -> OpenAIClientBuilder.BuildOpenAICompatibleChatClient (LLMProvider.AliBaba, alibabaApiKey, Models.Alibaba.Zhipu)
     | Settings.AIService.GitHub -> OpenAIClientBuilder.BuildOpenAICompatibleChatClient (LLMProvider.GitHub, githubToken, Models.GitHub.Phi_4_mini_instruct)
     | Settings.AIService.Mistral -> OpenAIClientBuilder.BuildOpenAICompatibleChatClient (LLMProvider.Mistral, mistralApiKey, Models.Mistral.MINISTRAL_14b_2512)
 
@@ -64,18 +64,19 @@ let cryptocurrencyAgent = CryptocurrencyAgent(
 
 AnsiConsole.MarkupLine $"🤖 Cryptocurrencies Agent [blue]{cryptocurrencyAgent.Name}[/] using model 🧠 [red]{model}[/] ({Settings.service})."
 
-let question = "What is my balance on Kraken, considering all the tokens? Calculate the balances in EUR and give me also the total. Give me a table in the answer."
+//let question = "What is my balance on Kraken, considering all the tokens? Calculate the balances in EUR and give me also the total. Give me a table in the answer."
 //let question = "What is the exchange rates of GBP/EUR and USD/EUR?"
+let question = "What is the market ticker (bid and ask) of XRP/EUR ?"
 AnsiConsole.MarkupLine($"[cyan]{question}[/]")
 
 task {
     let! response = cryptocurrencyAgent.Ask(question, ct)
-    //AnsiConsole.MarkupLine($"[yellow]{Markup.Escape response}[/]")
-    //let markdown = Markdown.Parse(response);
 
-    match response.Usage with 
+    match response.Usage with
     | null -> ()
-    | usage -> renderUsage usage    
+    | usage -> renderUsage usage
+
+    //logger.LogInformation response.Text
 
     do! ConsoleMarkdownRenderer.Displayer.DisplayMarkdownAsync(response.Text)
 }

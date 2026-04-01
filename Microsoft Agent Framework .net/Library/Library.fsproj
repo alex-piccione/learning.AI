@@ -6,6 +6,7 @@
   <ItemGroup>
     <Compile Include="Constants.fs" />
     <Compile Include="Models.fs" />
+    <Compile Include="Tools\Models\KrakenModels.fs" />
     <Compile Include="Tools\ToolsBase.fs" />
     <Compile Include="Tools\WiseTools.fs" />
     <Compile Include="Tools\KrakenTools.fs" />
@@ -25,6 +26,8 @@
     <PackageReference Include="Alex75.KrakenApiClient" />
     <PackageReference Include="FSharp.Core" />
     <PackageReference Include="FsHttp" />
+    <PackageReference Include="Microsoft.Agents.AI" />
+    <PackageReference Include="Microsoft.Agents.AI.Abstractions" />
     <PackageReference Include="Microsoft.Agents.AI.OpenAI" />
     <PackageReference Include="Microsoft.Extensions.Http" />
   </ItemGroup>

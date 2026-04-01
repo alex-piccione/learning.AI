@@ -7,8 +7,11 @@ module Models
 
     module public Alibaba =
         let Qwen_3_5_plus = "qwen3.5-plus"
+        let Qwen3_max_2026_01_23 = "qwen3-max-2026-01-23"
         let Qwen_Coder_Next = "qwen3-coder-next"
         let Qwen_Coder_Plus = "qwen3-coder-plus"
+
+        let Zhipu = "glm-5"
 
         let Kimi = "kimi-k2.5"
 
