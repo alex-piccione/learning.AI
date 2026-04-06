@@ -16,8 +16,9 @@ https://developer.microsoft.com/en-us/reactor/series/S-1631
   https://www.youtube.com/live/FQtZCKWjARI
 - 5. Python + Agents: Orchestrating advanced multi-agent workflows 
   https://www.youtube.com/live/WtZbDrd-RJg
-- 6. 
-
+- 6. Python + Agents: Adding a human in the loop to agentic workflows
+  https://www.youtube.com/live/7pGqASn-LEY
+  
   
 Repository:  
 https://github.com/Azure-Samples/python-agentframework-demos
@@ -29,8 +30,6 @@ https://github.com/orgs/microsoft-foundry/discussions/331
 
 
 Boot.dev: Build an AI Agent: https://www.boot.dev/lessons/44e182d7-c2c6-4c7e-9313-1b078e301344
-
-
 
 
 ## Run the examples
@@ -76,12 +75,9 @@ The solution was to downgrade "opentelemetry-semantic-conventions-ai":
 
 ## Open AI models
 
-gpt-5.1
+gpt-5.2
 gpt-5-mini
 gpt-5-nano
-gpt-4.1
-gpt-4.1-mini
-o4-mini
 
 
 ## DEV UI
@@ -96,6 +92,9 @@ What is an Agent?
 
 agent_basic.py
 
+openai_tool_calling.py  No agent, tool definition and use done manually  
+agent_tool.py           Single agent with single tool  
+agent_tools.py          Single agent with multiple tools  
 
 ### Context
 
@@ -155,3 +154,8 @@ Swith-case conditions.
 State management. workflow_conditional_state.py  ctx.set_state/get_state
 
 ## 5 
+
+
+## Session 6 | Add humans  to the loop
+
+agent_tool_approval.py

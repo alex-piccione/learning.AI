@@ -7,5 +7,8 @@
 
 **/*.egg-info/
 
-# slides copy whiule reading in PowerPoint
+# slides copy while reading in PowerPoint
 **/slides/~$*
+
+# too big for the repo
+**/videos

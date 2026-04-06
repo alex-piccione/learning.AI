@@ -5,7 +5,11 @@ from agent_builder import ModelType
 from agent_framework import  exceptions
 #from azure.identity.aio import DefaultAzureCredential, get_bearer_token_provider
 from rich import print
-from normattiva import NormattivaTool
+from logging_configuration import setup_logging
+from tools.normattiva import NormattivaTool
+
+# Setup logging
+setup_logging()
 
 exa_api_key=os.environ["EXA_API_KEY"]
 normattiva_tool = NormattivaTool(exa_api_key)

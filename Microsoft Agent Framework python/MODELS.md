@@ -1,5 +1,16 @@
 # LLM Models
 
+## GitHub
+
+https://github.com/marketplace?type=models
+https://docs.github.com/github-models/quickstart#step-2-make-an-api-call
+
+
+| Model         | Id                  | Description                                       | 
+|---------------|---------------------|---------------------------------------------------|
+| GPT 5 mini    | openai/gpt-5-mini   |                                                   |
+
+
 ## OpenAI
 
 | Model         | State    | Id           | Description                                | Price  In/Out    | Limits              | When to Use |
@@ -30,7 +41,6 @@ Prices are per 1M tokens.
 
 
 ## AliBaba
-
 
 Coding Plan offers the latest and most powerful programming models, including the Qwen series and excellent third-party models. With its powerful Coding Agent, you can switch between models on demand.
 Your current plan only supports the following models
