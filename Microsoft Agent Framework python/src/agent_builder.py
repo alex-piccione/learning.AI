@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 from agent_framework.openai import OpenAIChatClient
 import constants
 import os
+import logging
 from enum import Enum
 
 # helper for create AI Client that can be used to creatre Agents
@@ -38,6 +39,8 @@ def get_client(model_type: ModelType) -> OpenAIChatClient:
         print an error message and exit the program.
     """
 
+    logging.info(f"LLM API: {API_HOST}")
+
     if API_HOST == "github":
         model_key = "GITHUB_MODEL"
         client = OpenAIChatClient(
@@ -69,7 +72,7 @@ def get_client(model_type: ModelType) -> OpenAIChatClient:
             model_id=os.getenv(model_key)
         )
     else:        
-        print("failed to load the API_HOST")
+        logging.error("failed to load the API_HOST")
         #raise("failed to load the API_HOST")
         exit(1)
 

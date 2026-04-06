@@ -8,9 +8,9 @@ For search_law it needs an API key for exa.ai.
 from agent_framework import tool
 from typing import Annotated
 from normattiva2md import convert_url, search_law
-from ..logging_configuration import log_tool_call
+from logging_configuration import log_tool_call
 
-class NormattivaTool:
+class NormattivaTools:
 
     def __init__(self, exa_api_key:str):
         self.exa_api_key=exa_api_key

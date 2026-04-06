@@ -31,15 +31,14 @@ https://github.com/orgs/microsoft-foundry/discussions/331
 
 Boot.dev: Build an AI Agent: https://www.boot.dev/lessons/44e182d7-c2c6-4c7e-9313-1b078e301344
 
+## Run the code
+
+To run main.py: ``uv run src/main.py``.  
 
 ## Run the examples
 
 Code is in _src_ folder.  
-The _examples_ flder contain examples from Google demo repo: https://github.com/Azure-Samples/python-agentframework-demos
-
-Vis ed to run the Pyton app. 
-I'll try to put the new improved code in main.py, to run it: ``uv run src/main.py``.  
-
+The _examples_ folder contains the examples from Google demo repo: https://github.com/Azure-Samples/python-agentframework-demos
 
 
 ## Python AI frameworks

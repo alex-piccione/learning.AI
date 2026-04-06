@@ -7,8 +7,6 @@ from azure.identity.aio import DefaultAzureCredential, get_bearer_token_provider
 from dotenv import load_dotenv
 from rich import print
 
-print("Start 123")
-
 # Configure OpenAI client based on environment
 load_dotenv(override=True)
 API_HOST = os.getenv("API_HOST", "github")
