@@ -2,6 +2,8 @@ import asyncio
 import os
 import json
 
+# alternative main with initial simple example
+
 #  uv add "agent-framework==1.0.0rc2" --pre
 from agent_framework import Agent, exceptions
 from agent_framework.openai import OpenAIChatClient

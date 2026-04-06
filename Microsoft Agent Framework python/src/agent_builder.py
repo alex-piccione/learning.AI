@@ -4,6 +4,8 @@ import constants
 import os
 from enum import Enum
 
+# helper for create AI Client that can be used to creatre Agents
+
 load_dotenv(override=True)
 API_HOST="alibaba" # github, openai, alibaba
 
@@ -13,6 +15,28 @@ class ModelType(Enum):
     CHEAP = 3
 
 def get_client(model_type: ModelType) -> OpenAIChatClient:
+    """
+    Creates and returns an OpenAIChatClient instance based on the specified model type and API host.
+    
+    This function initializes a client for interacting with different AI service providers 
+    (GitHub, OpenAI, or Alibaba) depending on the configured API_HOST environment setting.
+    The client returned will be configured with the appropriate API key, base URL, and model ID
+    based on the requested model type.
+    
+    Args:
+        model_type (ModelType): The type of model to use. Can be one of:
+            - ModelType.REASONING: For reasoning-intensive tasks
+            - ModelType.FAST: For faster processing
+            - ModelType.CHEAP: For cost-effective processing
+    
+    Returns:
+        OpenAIChatClient: An initialized client object configured according to the 
+        specified model type and the current API_HOST setting.
+        
+    Raises:
+        SystemExit: If an unsupported API_HOST is configured, the function will 
+        print an error message and exit the program.
+    """
 
     if API_HOST == "github":
         model_key = "GITHUB_MODEL"
