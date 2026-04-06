@@ -7,3 +7,6 @@ def setup_logging():
     logging.basicConfig(level=logging.WARNING, handlers=[handler], force=True, format="%(message)s")
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
+
+def log_tool_call (method:str, params:str):
+    logging.info(f"⛏️ {method} {params}")
