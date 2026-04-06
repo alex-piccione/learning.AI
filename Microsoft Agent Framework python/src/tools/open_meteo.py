@@ -4,7 +4,7 @@ import requests
 import logging
 
 from .models.open_meteo_api import SearchResult, Result
-
+from .models.open_meteo_output import CityGeolocation
 
 
 class OpenMeteoTool:
