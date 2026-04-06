@@ -2,6 +2,7 @@ from agent_framework import tool
 from typing import Annotated
 import requests
 import logging
+from ..logging_configuration import log_tool_call
 
 from .models.open_meteo_api import SearchResult, Result
 from .models.open_meteo_output import CityGeolocation
@@ -15,7 +16,7 @@ class OpenMeteoTool:
     @tool(description="Get the city geolocation: latitude and longitude")
     def get_city_geolocation(self, city: Annotated[str, "The city name"]) -> CityGeolocation:
         """Returns the latitude and longitude of the city."""
-        logging.info(f"get_city_geolocation called for city: {city}")
+        log_tool_call("get_city_geolocation", f"city={city}")
 
         response = requests.get(f"{self.geolocationApiBaseUrl}/search?name={city}&count=1&language=en")        
         if response.status_code != 200:
@@ -42,7 +43,7 @@ class OpenMeteoTool:
     def get_current_weather(self, latitude: Annotated[float, "Latitude"], 
                            longitude: Annotated[float, "Longitude"]) -> str:
         """Returns current weather data for the given coordinates."""
-        logging.info(f"get_current_weather called for coordinates: {latitude}, {longitude}")
+        log_tool_call("get_current_weather", f"latitude={latitude}, longitude={longitude}")
 
         response = requests.get(f"{self.apiUrlBase}/forecast?latitude={latitude}&longitude={longitude}&current_weather=true")
         

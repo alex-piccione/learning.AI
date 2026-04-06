@@ -8,6 +8,7 @@ For search_law it needs an API key for exa.ai.
 from agent_framework import tool
 from typing import Annotated
 from normattiva2md import convert_url, search_law
+from ..logging_configuration import log_tool_call
 
 class NormattivaTool:
 
@@ -17,15 +18,14 @@ class NormattivaTool:
     @tool(description="Fetch and convert the Italian law to Markdown using normattiva.it")
     def get_law_markdown(self, url: Annotated[str, "The URL of normattiva.it"]) -> str:
         """Fetch and convert Italian law to Markdown"""
-        print("******** tool:  get_law_markdown ********")
-        print(f"URL: {url}")
+        log_tool_call("get_law_markdown", f"url={url}")
         result = convert_url(url)
         return result.markdown
     
     @tool(description="Correct the URN:NRI URL because encoded does not work")
     def unencode_urn_nri_url(self, url: Annotated[str, "The URL in URN:NRI format to correct"]) -> str:
         """The returned URL from the serach call is encoded, but the normattiva website accepts only unencode ones."""
-        print("******** tool:  unencode_urn_nri_url ********")
+        log_tool_call("unencode_urn_nri_url", f"url={url}")
         if ("N2Ls?urn:nir" in url):
             url = url.replace("%3A", ":").replace("%3B", ";").replace("%21", "!")
         return url
@@ -34,9 +34,9 @@ class NormattivaTool:
     #@tool(approval_mode="always_require")
     def search(self, query: Annotated[str, "The text to search"]) -> str:
         """Search laws (needs EXA_API_KEY)"""
-        print("******** tool: search ********")
+        log_tool_call("search", f"query={query}")
         result = search_law(query=query, exa_api_key=self.exa_api_key)
-
+        
         #print("--- start ---")
         print(str(result))
         #print("--- end ---")
