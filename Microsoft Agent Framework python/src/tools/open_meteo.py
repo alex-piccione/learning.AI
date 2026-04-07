@@ -6,8 +6,10 @@ from logging_configuration import log_tool_call
 from rich import print
 
 from .models.open_meteo_api import GeolocationSearchResult, GeolocationResult
-from .models.open_meteo_output import CityGeolocation
+from .models.open_meteo_output import CityGeolocation, CurrentWeather
 from .models.json_helper import parse_json
+
+# OpenMeteo documentation: https://open-meteo.com/en/docs
 
 
 class OpenMeteoTools:
@@ -17,6 +19,7 @@ class OpenMeteoTools:
 
     def get_tools(self) -> list:
         return [self.get_city_geolocation, self.get_current_weather]
+    
 
     @tool(description="Get the city geolocation: latitude and longitude")
     def get_city_geolocation(self, city: Annotated[str, "The city name"]) -> CityGeolocation:
@@ -67,7 +70,7 @@ class OpenMeteoTools:
 
     @tool(description="Get current weather for a given latitude and longitude")
     def get_current_weather(self, latitude: Annotated[float, "Latitude"], 
-                           longitude: Annotated[float, "Longitude"]) -> str:
+                           longitude: Annotated[float, "Longitude"]) -> CurrentWeather:
         """Returns current weather data for the given coordinates."""
         log_tool_call("get_current_weather", f"latitude={latitude}, longitude={longitude}")
 
@@ -75,20 +78,21 @@ class OpenMeteoTools:
         response = requests.get(f"{self.apiUrlBase}/forecast?latitude={latitude}&longitude={longitude}&current_weather=true")
         
         if response.status_code != 200:
-            return f"Error: Unable to fetch weather data. Status code: {response.status_code}"
+            raise Exception(f"Error: Unable to fetch weather data. Status code: {response.status_code}")
         
         data = response.json()
 
-        print(data)
-        logging.info(f"Response: {data}")
+        #print(data)
+        #logging.info(f"Response: {data}")
         
         if 'current_weather' not in data:
-            return "Error: Weather data not available for the specified location."
+            raise Exception("Error: Weather data not available for the specified location.")
         
         current_weather = data['current_weather']
-        result_str = f"Temperature: {current_weather['temperature']}°C, " \
-                     f"Windspeed: {current_weather['windspeed']} km/h, " \
-                     f"Wind direction: {current_weather['winddirection']}°, " \
-                     f"Weather code: {current_weather['weathercode']}"
         
-        return result_str
+        return CurrentWeather(
+            temperature=current_weather['temperature'],
+            wind_speed=current_weather['windspeed'],
+            wind_direction= get_wind_direction(current_weather['winddirection']),
+            weather_description=get_weather_description(current_weather['weathercode'])
+        )
