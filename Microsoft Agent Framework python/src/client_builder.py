@@ -89,7 +89,7 @@ def create_client(api_host: ApiHost, model_type: ModelType) -> OpenAIChatClient:
             model=os.getenv(model_key)
         )
     else:        
-        logging.error("failed to load the API_HOST")
+        logging.error(f"Unmanaged Api Host: {api_host}.")
         #raise("failed to load the API_HOST")
         exit(1)
 

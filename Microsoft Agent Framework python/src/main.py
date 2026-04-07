@@ -1,10 +1,9 @@
 import asyncio
 import os
 import logging
-import client_builder
-from client_builder import ApiHost, ModelType 
+from client_wrapper import ApiHost, ModelType, create_client
 from agent_framework import  exceptions
-#from azure.identity.aio import DefaultAzureCredential, get_bearer_token_provider
+# from azure.identity.aio import DefaultAzureCredential, get_bearer_token_provider
 from rich import print
 from logging_configuration import setup_logging
 from tools import tools_builder
@@ -19,12 +18,13 @@ open_meteo_tools = OpenMeteoTools()
 
 tools = tools_builder.discover_tools(normattiva_tools, open_meteo_tools)
 
-client_reasoning = client_builder.create_client(ApiHost.AliBaba, ModelType.REASONING)
-client_cheap = client_builder.create_client(ApiHost.AliBaba, ModelType.CHEAP)
-client_fast = client_builder.create_client(ApiHost.AliBaba, ModelType.FAST)
+client_reasoning = create_client(ApiHost.AliBaba, ModelType.REASONING)
+client_cheap = create_client(ApiHost.AliBaba, ModelType.CHEAP)
+client_fast = create_client(ApiHost.AliBaba, ModelType.FAST)
 
-logging.info(f"LLM Model for client_reasoning: {client_reasoning.model} from ")  
-logging.info(f"LLM Model for client_cheap: {client_cheap.model}")  
+logging.info(f"LLM Model for client_reasoning: {client_reasoning.model} from {client_reasoning.api_host}")  
+logging.info(f"LLM Model for client_cheap: {client_cheap.model} from {client_cheap.api_host}")  
+logging.info(f"LLM Model for client_fast: {client_fast.model} from {client_fast.api_host}")  
 
 lawyer_agent = client_reasoning.as_agent(
     name="Italian lawyer",
@@ -37,7 +37,6 @@ lawyer_agent = client_reasoning.as_agent(
 
 meteo_agent = client_cheap.as_agent(
     name="Colonnello Bernacca",
-    #description="You are an expert metereologist",
     instructions=(
         "You are an expert metereologyst.",
         "You use your tools to answer user questions,"
@@ -72,10 +71,3 @@ if __name__ == "__main__":
     print("Python Agents")
     asyncio.run(main())
     
-
-    """
-    Python Agents
-To find the first paragraph of the specific law you're looking for, you should visit the Normattiva website (www.normattiva.it) where you can search for 
-Italian laws by their number and date. Simply enter "Legge 23 dicembre 2014, n. 100" into their search function to locate and view the text directly.
- *  Terminal will be reused by tasks, press any key to close it. 
-    """
