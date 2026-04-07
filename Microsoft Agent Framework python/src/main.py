@@ -22,8 +22,8 @@ tools = tools_builder.discover_tools(normattiva_tools, open_meteo_tools)
 client_reasoning = client_builder.create_client(ModelType.REASONING)
 client_cheap = client_builder.create_client(ModelType.CHEAP)
 
-logging.info(f"LLM Model for client_reasoning: {client_reasoning.model_id}")  
-logging.info(f"LLM Model for client_cheap: {client_cheap.model_id}")  
+logging.info(f"LLM Model for client_reasoning: {client_reasoning.model}")  
+logging.info(f"LLM Model for client_cheap: {client_cheap.model}")  
 
 lawyer_agent = client_reasoning.as_agent(
     name="Italian lawyer",
@@ -37,7 +37,7 @@ lawyer_agent = client_reasoning.as_agent(
 meteo_agent = client_cheap.as_agent(
     name="Colonnello Bernacca",
     #description="You are an expert metereologist",
-    insrtructions=(
+    instructions=(
         "You are an expert metereologyst.",
         "You use your tools to answer user questions,"
     ),

@@ -14,28 +14,6 @@ class GeolocationResult:
     country: str
     timezone: str
 
-    """
-     {
-            'id': 3171173,
-            'name': 'Pesaro',
-            'latitude': 43.90921,
-            'longitude': 12.9164,
-            'elevation': 11.0,
-            'feature_code': 'PPLA2',
-            'country_code': 'IT',
-            'admin1_id': 3174004,
-            'admin2_id': 3171172,
-            'admin3_id': 6542003,
-            'timezone': 'Europe/Rome',
-            'population': 77241,
-            'country_id': 3175395,
-            'country': 'Italy',
-            'admin1': 'The Marches',
-            'admin2': 'Pesaro and Urbino',
-            'admin3': 'Pesaro'
-        }
-    """
-
 
 @dataclass
 class GeolocationSearchResult: 

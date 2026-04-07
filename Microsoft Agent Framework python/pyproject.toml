@@ -7,12 +7,13 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
-    "agent-framework[openai]==1.0.0rc2",
+    "agent-framework[openai]==1.0.0",
     "asyncio>=4.0.0",
     "dacite>=1.9.2",
     "normattiva2md>=2.1.10",
-    "opentelemetry-semantic-conventions-ai==0.4.13",  # Pinned version for error in agent-framework"
-    "python-dotenv>=1.2.1",
+    #"opentelemetry-semantic-conventions-ai==0.4.13",  # Pinned version for error in agent-framework"
+    "opentelemetry-semantic-conventions-ai==0.5.1",  # Pinned version for error in agent-framework"
+    "python-dotenv>=1.2.2",
     "rich>=13.7.1,<14.0.0",  # Compatible with normattiva2md
 ]
 

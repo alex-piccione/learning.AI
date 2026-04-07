@@ -7,4 +7,4 @@ def setup_logging():
     logging.basicConfig(level=logging.INFO, handlers=[handler], force=True, format="%(message)s")
 
 def log_tool_call (method:str, params:str):
-    logging.info(f"⛏️ {method} {params}")
+    logging.info(f"⛏️  {method} {params}")

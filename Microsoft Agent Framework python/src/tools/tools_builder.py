@@ -1,6 +1,5 @@
 from typing import List, Any
 
-
 def discover_tools(*tool_instances) -> List[Any]:
     """
     Collect all tools functions from multiple Tools instances.

@@ -46,7 +46,7 @@ def create_client(model_type: ModelType) -> OpenAIChatClient:
         client = OpenAIChatClient(
             base_url=constants.GITHUB_AI_URL,
             api_key=os.environ["GITHUB_TOKEN"],
-            model_id=os.getenv(model_key)
+            model=os.getenv(model_key)
         )
     elif API_HOST == "openai":
         model_key = {
@@ -57,7 +57,7 @@ def create_client(model_type: ModelType) -> OpenAIChatClient:
 
         client = OpenAIChatClient(
             api_key=os.environ["OPENAI_API_KEY"],
-            model_id=os.getenv(model_key)
+            model=os.getenv(model_key)
         )
     elif API_HOST == "alibaba":
         model_key = {
@@ -69,7 +69,7 @@ def create_client(model_type: ModelType) -> OpenAIChatClient:
         client = OpenAIChatClient(
             base_url=constants.ALIBABA_AI_URL,
             api_key=os.environ["ALIBABA_API_KEY"],
-            model_id=os.getenv(model_key)
+            model=os.getenv(model_key)
         )
     else:        
         logging.error("failed to load the API_HOST")
