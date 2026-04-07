@@ -1,7 +1,7 @@
 import asyncio
 import os
 import logging
-from client_wrapper import ApiHost, ModelType, create_client
+from client_builder import ApiHost, ModelType, create_client
 from agent_framework import  exceptions
 # from azure.identity.aio import DefaultAzureCredential, get_bearer_token_provider
 from rich import print
