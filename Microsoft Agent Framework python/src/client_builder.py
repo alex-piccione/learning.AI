@@ -8,14 +8,19 @@ from enum import Enum
 # helper for create AI Client that can be used to creatre Agents
 
 load_dotenv(override=True)
-API_HOST="alibaba" # github, openai, alibaba
+
+class ApiHost(Enum):
+    AliBaba = 1
+    AliBaba_Plan = 2
+    GitHub = 3
+    OpenAI = 4
 
 class ModelType(Enum):
     REASONING = 1
     FAST = 2
     CHEAP = 3
 
-def create_client(model_type: ModelType) -> OpenAIChatClient:
+def create_client(api_host: ApiHost, model_type: ModelType) -> OpenAIChatClient:
     """
     Creates and returns an OpenAIChatClient instance based on the specified model type and API host.
     
@@ -25,6 +30,8 @@ def create_client(model_type: ModelType) -> OpenAIChatClient:
     based on the requested model type.
     
     Args:
+        api_host (ApiHost): ...
+
         model_type (ModelType): The type of model to use. Can be one of:
             - ModelType.REASONING: For reasoning-intensive tasks
             - ModelType.FAST: For faster processing
@@ -39,16 +46,14 @@ def create_client(model_type: ModelType) -> OpenAIChatClient:
         print an error message and exit the program.
     """
 
-    logging.info(f"LLM API: {API_HOST}")
-
-    if API_HOST == "github":
+    if api_host == ApiHost.GitHub:
         model_key = "GITHUB_MODEL"
         client = OpenAIChatClient(
             base_url=constants.GITHUB_AI_URL,
             api_key=os.environ["GITHUB_TOKEN"],
             model=os.getenv(model_key)
         )
-    elif API_HOST == "openai":
+    elif api_host == ApiHost.OpenAI:
         model_key = {
             ModelType.REASONING: "OPENAI_MODEL",
             ModelType.FAST: "OPENAI_MODEL_FAST",
@@ -59,7 +64,7 @@ def create_client(model_type: ModelType) -> OpenAIChatClient:
             api_key=os.environ["OPENAI_API_KEY"],
             model=os.getenv(model_key)
         )
-    elif API_HOST == "alibaba":
+    elif api_host == ApiHost.AliBaba:
         model_key = {
             ModelType.REASONING: "ALIBABA_MODEL",
             ModelType.FAST: "ALIBABA_MODEL_FAST",
@@ -69,6 +74,18 @@ def create_client(model_type: ModelType) -> OpenAIChatClient:
         client = OpenAIChatClient(
             base_url=constants.ALIBABA_AI_URL,
             api_key=os.environ["ALIBABA_API_KEY"],
+            model=os.getenv(model_key)
+        )
+    elif api_host == ApiHost.AliBaba_Plan:
+        model_key = {
+            ModelType.REASONING: "ALIBABA_PLAN_MODEL",
+            ModelType.FAST: "ALIBABA_PLAN_MODEL_FAST",
+            ModelType.CHEAP: "ALIBABA_PLAN_MODEL_CHEAP"
+        }.get(model_type, "ALIBABA_PLAN_MODEL")
+
+        client = OpenAIChatClient(
+            base_url=constants.ALIBABA_PLAN_AI_URL,
+            api_key=os.environ["ALIBABA_PLAN_API_KEY"],
             model=os.getenv(model_key)
         )
     else:        

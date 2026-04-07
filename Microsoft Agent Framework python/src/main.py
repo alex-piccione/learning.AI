@@ -2,7 +2,7 @@ import asyncio
 import os
 import logging
 import client_builder
-from client_builder import ModelType 
+from client_builder import ApiHost, ModelType 
 from agent_framework import  exceptions
 #from azure.identity.aio import DefaultAzureCredential, get_bearer_token_provider
 from rich import print
@@ -19,10 +19,11 @@ open_meteo_tools = OpenMeteoTools()
 
 tools = tools_builder.discover_tools(normattiva_tools, open_meteo_tools)
 
-client_reasoning = client_builder.create_client(ModelType.REASONING)
-client_cheap = client_builder.create_client(ModelType.CHEAP)
+client_reasoning = client_builder.create_client(ApiHost.AliBaba, ModelType.REASONING)
+client_cheap = client_builder.create_client(ApiHost.AliBaba, ModelType.CHEAP)
+client_fast = client_builder.create_client(ApiHost.AliBaba, ModelType.FAST)
 
-logging.info(f"LLM Model for client_reasoning: {client_reasoning.model}")  
+logging.info(f"LLM Model for client_reasoning: {client_reasoning.model} from ")  
 logging.info(f"LLM Model for client_cheap: {client_cheap.model}")  
 
 lawyer_agent = client_reasoning.as_agent(
@@ -48,8 +49,8 @@ meteo_agent = client_cheap.as_agent(
 async def main():    
 
     try :
-        #response = await meteo_agent.run("Che tempo fa a Pesaro, in Italia?")
-        response = await meteo_agent.run("Dove si trova Pesaro, in Italia?")
+        response = await meteo_agent.run("Che tempo fa a Pesaro, in Italia?")
+        #response = await meteo_agent.run("Dove si trova Pesaro, in Italia?")
         print(response.text)
     except exceptions.ChatClientException as ex:
         logging.error(f"ChatClientException. {ex}")
