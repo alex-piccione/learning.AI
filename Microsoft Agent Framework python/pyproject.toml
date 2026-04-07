@@ -9,6 +9,7 @@ requires-python = ">=3.12"
 dependencies = [
     "agent-framework[openai]==1.0.0rc2",
     "asyncio>=4.0.0",
+    "dacite>=1.9.2",
     "normattiva2md>=2.1.10",
     "opentelemetry-semantic-conventions-ai==0.4.13",  # Pinned version for error in agent-framework"
     "python-dotenv>=1.2.1",

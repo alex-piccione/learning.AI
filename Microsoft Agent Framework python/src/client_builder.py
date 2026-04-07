@@ -15,7 +15,7 @@ class ModelType(Enum):
     FAST = 2
     CHEAP = 3
 
-def get_client(model_type: ModelType) -> OpenAIChatClient:
+def create_client(model_type: ModelType) -> OpenAIChatClient:
     """
     Creates and returns an OpenAIChatClient instance based on the specified model type and API host.
     
