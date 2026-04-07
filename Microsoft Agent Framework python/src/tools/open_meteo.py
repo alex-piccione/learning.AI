@@ -5,6 +5,8 @@ import logging
 from logging_configuration import log_tool_call
 from rich import print
 
+from tools.open_meteo_utils import get_wind_direction, get_weather_description
+
 from .models.open_meteo_api import GeolocationSearchResult, GeolocationResult
 from .models.open_meteo_output import CityGeolocation, CurrentWeather
 from .models.json_helper import parse_json
@@ -90,9 +92,14 @@ class OpenMeteoTools:
         
         current_weather = data['current_weather']
         
-        return CurrentWeather(
+        w =  CurrentWeather(
             temperature=current_weather['temperature'],
             wind_speed=current_weather['windspeed'],
             wind_direction= get_wind_direction(current_weather['winddirection']),
             weather_description=get_weather_description(current_weather['weathercode'])
         )
+
+
+        print(w)
+
+        return w

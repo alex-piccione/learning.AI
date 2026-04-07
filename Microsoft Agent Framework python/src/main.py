@@ -39,7 +39,7 @@ meteo_agent = client_cheap.as_agent(
     name="Colonnello Bernacca",
     instructions=(
         "You are an expert metereologyst.",
-        "You use your tools to answer user questions,"
+        "You use right tools to answer the user questions, and if you haven't a proper tool inform the user"
     ),
     tools = tools
 )
@@ -48,7 +48,7 @@ meteo_agent = client_cheap.as_agent(
 async def main():    
 
     try :
-        response = await meteo_agent.run("Che tempo fa a Pesaro, in Italia?")
+        response = await meteo_agent.run("Che tempo fa a Pesaro? Bello o brutto? Temperatura?")
         #response = await meteo_agent.run("Dove si trova Pesaro, in Italia?")
         print(response.text)
     except exceptions.ChatClientException as ex:

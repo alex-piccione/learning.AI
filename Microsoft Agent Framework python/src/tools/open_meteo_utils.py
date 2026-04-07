@@ -1,16 +1,30 @@
 def get_wind_direction(direction_degrees) -> str:
-    """Returns the wind direction as Nort"""
-    # < 22.5 or  -> north
-    # < 67.5 -> north-east
-    # < 112.5 -> east
-    # ...
-    # > 337.5 -> north
-
-    if (direction_degrees > 315 or direction_degrees < 45):
+    """Returns the wind direction as a compass direction (N, NE, E, SE, S, SW, W, NW) based on degrees."""
+    # Normalize the angle to 0-360 degrees
+    direction_degrees = direction_degrees % 360
+    
+    if (direction_degrees >= 337.5 and direction_degrees <= 360) or (direction_degrees >= 0 and direction_degrees < 22.5):
         return "north"
-    elif (direction_degrees > 90):
+    elif direction_degrees >= 22.5 and direction_degrees < 67.5:
+        return "northeast"
+    elif direction_degrees >= 67.5 and direction_degrees < 112.5:
+        return "east"
+    elif direction_degrees >= 112.5 and direction_degrees < 157.5:
+        return "southeast"
+    elif direction_degrees >= 157.5 and direction_degrees < 202.5:
+        return "south"
+    elif direction_degrees >= 202.5 and direction_degrees < 247.5:
+        return "southwest"
+    elif direction_degrees >= 247.5 and direction_degrees < 292.5:
+        return "west"
+    elif direction_degrees >= 292.5 and direction_degrees < 337.5:
+        return "northwest"
+    else:
+        # This should never happen due to the modulo operation and ranges, but as a fallback
+        return "north"
 
-def get_weather_code_description(code: int) -> str:
+
+def get_weather_description(code: int) -> str:
     """
     Returns the description for a given WMO (World Meteorological Organization) weather code.
     
