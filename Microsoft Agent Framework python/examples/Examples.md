@@ -5,4 +5,7 @@ Examples from https://github.com/Azure-Samples/python-agentframework-demos.
 
 - agent_basic.py: Basic example of Agent WIYHOU any Tool
 - openai_tool_calling.pt: define the tool and call it manuall
+- agent_tool.py: Agent is capable to have defined tools in a very easy way
+- agent_tools.py: give multiple tools to the agent
+- 
 
