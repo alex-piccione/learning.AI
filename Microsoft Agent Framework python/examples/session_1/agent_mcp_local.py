@@ -30,6 +30,12 @@ if API_HOST == "azure":
         api_key=token_provider,
         model=os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT"],
     )
+elif API_HOST == "github":
+    client = OpenAIChatClient(
+        base_url="https://models.github.ai/inference",
+        api_key=os.environ["GITHUB_TOKEN"],
+        model=os.getenv("GITHUB_MODEL", "openai/gpt-5-mini"),
+    )
 else:
     client = OpenAIChatClient(
         api_key=os.environ["OPENAI_API_KEY"],

@@ -101,7 +101,6 @@ async def main():
 if __name__ == "__main__":
     if "--devui" in sys.argv:
         from agent_framework.devui import serve
-
         serve(entities=[agent], auto_open=True)
     else:
         asyncio.run(main())

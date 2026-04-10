@@ -9,7 +9,7 @@ from rich import print
 
 # Configure OpenAI client based on environment
 load_dotenv(override=True)
-API_HOST = os.getenv("API_HOST", "github")
+API_HOST = os.getenv("API_HOST", "azure")
 
 async_credential = None
 if API_HOST == "azure":
@@ -18,17 +18,17 @@ if API_HOST == "azure":
     client = OpenAIChatClient(
         base_url=f"{os.environ['AZURE_OPENAI_ENDPOINT']}/openai/v1/",
         api_key=token_provider,
-        model_id=os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT"],
+        model=os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT"],
     )
 elif API_HOST == "github":
     client = OpenAIChatClient(
         base_url="https://models.github.ai/inference",
         api_key=os.environ["GITHUB_TOKEN"],
-        model_id=os.getenv("GITHUB_MODEL", "openai/gpt-5-mini"),
+        model=os.getenv("GITHUB_MODEL", "openai/gpt-5-mini"),
     )
 else:
     client = OpenAIChatClient(
-        api_key=os.environ["OPENAI_API_KEY"], model_id=os.environ.get("OPENAI_MODEL", "gpt-5-mini")
+        api_key=os.environ["OPENAI_API_KEY"], model=os.environ.get("OPENAI_MODEL", "gpt-5.4")
     )
 
 agent = Agent(client=client, instructions="You're an informational agent. Answer questions cheerfully.")
@@ -43,5 +43,4 @@ async def main():
 
 
 if __name__ == "__main__":
-    print("Start")
     asyncio.run(main())

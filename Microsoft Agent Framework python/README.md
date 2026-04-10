@@ -60,28 +60,21 @@ You need to update some files manually and add instruction to avery command (als
 ## UV
 
 ``uv buid`` to build the project.  
-``uv add <library>`` to adda library  
-
-
-## Issues
-
-### Getting AttributeError: type object 'SpanAttributes' has no attribute 'LLM_SYSTEM'
-
-agent-framework version 1.0.0-rc1  raises an error for missing LLM_ attribute or something like that.  
-The solution was to downgrade "opentelemetry-semantic-conventions-ai":  
-`uv add opentelemetry-semantic-conventions-ai==0.4.13`  
-
-
-## Open AI models
-
-gpt-5.2
-gpt-5-mini
-gpt-5-nano
+``uv add <library>`` to add a library  
+``uv lock`` to regenerate the uv.lock file
+``uv sync`` to install the new packages and regenerate the uv.lock file  
+``uv run <file>`` to run a file.  
 
 
 ## DEV UI
 
-``uv run <fiel> --devui``
+``uv run <file> --devui``
+in hte code you have something like:
+```python
+if "--devui" in sys.argv:
+    from agent_framework.devui import serve
+    serve(entities=[agent], auto_open=True)
+``` 
 
 
 ## Session 1
@@ -90,7 +83,6 @@ What is an Agent?
 **An Agent is an LLm thta runs tools ina loop to achieve a goal.**  
 
 agent_basic.py
-
 openai_tool_calling.py  No agent, tool definition and use done manually  
 agent_tool.py           Single agent with single tool  
 agent_tools.py          Single agent with multiple tools  
