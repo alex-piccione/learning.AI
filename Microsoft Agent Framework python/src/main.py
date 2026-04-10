@@ -1,5 +1,5 @@
 import asyncio
-import os
+import sys, os
 import logging
 from client_builder import ApiHost, ModelType, create_client
 from agent_framework import  exceptions
@@ -68,6 +68,11 @@ async def main():
         logging.error(f"Failed to call Agent. {ex}")
 
 if __name__ == "__main__":
-    print("Python Agents")
-    asyncio.run(main())
+
+    if "--devui" in sys.argv:
+        from agent_framework.devui import serve
+        serve(entities=[lawyer_agent, meteo_agent], auto_open=True)
+    else:
+        print("Python Agents")
+        asyncio.run(main())
     
