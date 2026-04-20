@@ -41,14 +41,6 @@ Code is in _src_ folder.
 The _examples_ folder contains the examples from Google demo repo: https://github.com/Azure-Samples/python-agentframework-demos
 
 
-## Python AI frameworks
-
-- agent_framework is a framework from Microsoft (successor of semantic-kernel) well integratd with Azure
-- langchain v1  (similar to agent_framework)
-- pydantic-ai   
-- openai-agent  (more limited)
-
-
 ## venv
 
 `python -m venv .venv` creates a virtualenv named ".venv"  and the folder _.venv_.  
@@ -82,10 +74,19 @@ if "--devui" in sys.argv:
 What is an Agent?  
 **An Agent is an LLm thta runs tools ina loop to achieve a goal.**  
 
-agent_basic.py
-openai_tool_calling.py  No agent, tool definition and use done manually  
-agent_tool.py           Single agent with single tool  
-agent_tools.py          Single agent with multiple tools  
+ Python AI frameworks:
+- agent_framework is a framework from Microsoft (successor of semantic-kernel) well integratd with Azure
+- langchain v1  (similar to agent_framework)
+- pydantic-ai   
+- openai-agent  (more limited)
+
+Manual call to OpenAI model
+Manual tools configuration.
+Tools configuration using MS Agent Framework.
+Agent Middleware (Agent middleware, Chat middleware and Function middleware).
+
+
+## Session 2
 
 ### Context
 

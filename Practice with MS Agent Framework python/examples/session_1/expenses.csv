@@ -1,0 +1,7 @@
+date,amount,category,description,payment_method
+2026-02-08,1200.0,gadget,Laptop purchase,visa
+2026-04-09,1200.0,gadget,Laptop purchase,visa
+2026-04-09,1200.0,gadget,Laptop purchase,visa
+2023-12-01,5.0,food,Bought pizza for dinner. Paid cash.,cash
+2024-01-01,5.0,food,bought pizza for dinner. paid cash.,cash
+2023-04-01,5.0,food,Bought pizza for dinner,cash

@@ -24,7 +24,6 @@ EXPENSES_FILE = SCRIPT_DIR / "expenses.csv"
 
 mcp = FastMCP("Expenses Tracker")
 
-
 class PaymentMethod(Enum):
     """Payment methods accepted for expenses."""
 
@@ -106,4 +105,6 @@ async def get_expenses_data() -> str:
 
 if __name__ == "__main__":
     logger.info("MCP Expenses server starting (HTTP mode on port 8000)")
-    mcp.run(transport="streamable-http", host="127.0.0.1", port=8000)
+    # stateless_http=True is required for .net MCP proltocoll not supporting latest  protocoll properly
+    #mcp.run(transport="streamable-http", host="127.0.0.1", port=8000, stateless_http=False)
+    mcp.run(transport="sse", host="127.0.0.1", port=8000, stateless_http=False)
