@@ -1,6 +1,7 @@
 import asyncio
 import sys, os
 import logging
+from agents.builder import AgentBuilder
 from client_builder import ApiHost, ModelType, create_client
 from agent_framework import  exceptions
 # from azure.identity.aio import DefaultAzureCredential, get_bearer_token_provider
@@ -44,8 +45,23 @@ meteo_agent = client_cheap.as_agent(
     tools = tools
 )
 
+agent_builder = AgentBuilder()
 
-async def main():    
+orchestratorAgent = agent_builder.buildOrchestrator()
+
+async def main():  
+
+    question = "Che tempo fa a Pesaro? Bello o brutto? Temperatura?"
+
+    try:
+        response = await orchestratorAgent.run(question)
+        print(response.text)
+    except exceptions.ChatClientException as ex:
+        logging.error(f"ChatClientException. {ex}")
+    except Exception as ex:
+        logging.error(f"Failed to call Agent. {ex}")
+
+    return 0
 
     try :
         response = await meteo_agent.run("Che tempo fa a Pesaro? Bello o brutto? Temperatura?")

@@ -1,7 +1,7 @@
 # TODO
 
 
-[ ] Video 1, complete examples
+[X] Video 1, complete examples
 [ ] normattiva URL are formatted wrong
     Today the URL are ok (yesterday they were encoded)
 
